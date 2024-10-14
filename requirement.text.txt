@@ -1,0 +1,4 @@
+- untuk mengupdate paket gunakan metode hapus 
+    caranya : untuk data yang di update terdapat kolom type yang berisi value z
+    jika data belum ada atau baru pertamakali tambah data paket kolom type berisi null
+    pada halaman paket filter data dengan kondisi type != z
