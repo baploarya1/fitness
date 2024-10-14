@@ -37,7 +37,7 @@ Route::middleware('auth')->group(
         Route::post('/hapus-transaksi', [TransaksiController::class,'hapusTransaksi']);
         Route::post('/hapus-paket', [PaketController::class,'hapusPaket']);
         // Route::post('/transaksi', [TransaksiController::class,'store']);
-
+        Route::post('/ajax-load-paket', [TransaksiController::class, 'ajaxLoadPaket'])->name('ajax.load.paket');
     }
 );
 

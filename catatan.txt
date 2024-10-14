@@ -1,0 +1,11 @@
+tabel mutasi
+
+nomor_transaksi
+tanggal_transaksi
+masuk
+keluar
+kode_aksesoris
+harga
+type
+user_id
+username

@@ -34,6 +34,14 @@ class TransaksiController extends Controller
 
     }
 
+    public function ajaxLoadPaket(Request $request){
+        $data = Paket::select('kode_paket','nama_paket')->where('kode_kategori', $request->kode_kategori)->get();
+        // echo "<option value=''>-Pilih Paket-</option>";
+        foreach ($data as $d) {
+            echo "<option value='$d[kode_paket]'>$d[nama_paket]</option>";
+        }
+        // return response()->json($data);
+    }
     /**
      * Show the form for creating a new resource.
      *
