@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class PembayaranController extends Controller
 {
@@ -15,6 +17,11 @@ class PembayaranController extends Controller
     public function index()
     {
         //
+        $pembayarans = Pembayaran::filter(request()->only(['search']))
+        ->where('type', '!=', 'z') // Filter berdasarkan type
+        ->orderBy('created_at', 'desc') // Urutkan berdasarkan created_at
+        ->paginate(10);
+         return view('pembayaran.index', compact('pembayarans'));
         
     }
 
@@ -26,6 +33,8 @@ class PembayaranController extends Controller
     public function create()
     {
         //
+        return view('pembayaran.create');
+
     }
 
     /**
@@ -34,9 +43,52 @@ class PembayaranController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function hapusPembayaran(Request $request)
+    {
+        //
+        $id = $request->id;
+
+        $pembayaran = Pembayaran::find($id);
+        $pembayaran->type = 'z';
+        $pembayaran->save();
+        
+        return redirect()->route('pembayaran.index')->with(['success' => 'Data Berhasil Dihapus!']);
+
+    }
     public function store(Request $request)
     {
         //
+
+        $request->validate([
+            'kode_pembayaran' => 'required|string|max:255',
+            'nama_pembayaran' => 'required|string|max:255',
+            'keterangan' => 'nullable|string',
+                  
+            
+        ]);
+        if(isset($request->id)){
+            $member = Pembayaran::find($request->id);
+            $member->type = 'z';
+            $member->save();
+        }
+        $request->validate(['kode_pembayaran' => ['required','string','max:255',Rule::unique('transaksi')->where(function ($query) {
+                        return $query->where('type', 'a');
+                    }),
+        ]]);
+        $user = Auth::user();
+    
+           
+            // Simpan data member ke database
+            Pembayaran::create([
+                'kode_pembayaran' => $request->kode_pembayaran,
+                'nama_pembayaran' => $request->nama_pembayaran,
+                'keterangan' => $request->keterangan,
+                'type' =>  "a",
+                'username' =>  $user->name,
+                'user_id' => $user->id,
+            ]);
+            return redirect()->route('pembayaran.index')->with('success', 'pembayaran berhasil ditambahkan!');
+
     }
 
     /**
@@ -56,9 +108,15 @@ class PembayaranController extends Controller
      * @param  \App\Models\Pembayaran  $pembayaran
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pembayaran $pembayaran)
+    public function edit($id)
     {
         //
+        $pembayaran = Pembayaran::find($id);
+        
+
+        return view('pembayaran.edit',[
+            "pembayaran"=>$pembayaran
+        ]);
     }
 
     /**

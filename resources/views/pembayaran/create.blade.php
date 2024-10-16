@@ -46,31 +46,13 @@
     </div>
     <div class="card">
         <div class="card-body">
-             <form class='mt-2' enctype="multipart/form-data" action="{{ route('paket.store') }}" id="myForm" method="POST">
+             <form class='mt-2' enctype="multipart/form-data" action="{{ route('pembayaran.store') }}" id="myForm" method="POST">
                 @csrf                           
-                   
-                
-                @component('components.inputGroup',['label'=>'Kode Paket ',"name"=>"kode_paket","col"=>"col-md-5"]) @endcomponent
-                    @component('components.inputGroup',['label'=>'Nama Paket ',"name"=>"nama_paket","col"=>"col-md-5"]) @endcomponent
-                   
-                    @component('components.select',['label'=>'Kategori',"type"=>"obj","name"=>"kode_kategori" ,'key1'=>'kode_kategori','key2'=>'nama_kategori','col'=>'col-lg-8 col-sm-6',"placeholder"=>"Pilih Kategori", "options"=>$kategoris])
-                    @endcomponent
-                    @component('components.inputTanggal',['label'=>'Tanggal Mulai Berlaku',"name"=>"tanggal_mulai_berlaku" ,"placeholder"=>"Last name", "col"=>"col-md-5",
-                    "value"=>$current]) @endcomponent
-                    @component('components.inputTanggal',['label'=>'Tanggal Habis Berlaku',"name"=>"tanggal_habis_berlaku" ,"placeholder"=>"Last name", "col"=>"col-md-5",
-                    "value"=>$current]) @endcomponent
-                    @component('components.select',['label'=>'Status',"type"=>"arr","name"=>"status" ,'key1'=>'nama','key2'=>'nama','col'=>'col-lg-8 col-sm-6',"placeholder"=>"Pilih Status", "options"=>[["nama"=>"Aktif"],["nama"=>"Tidak Aktif"]]])
-                    @endcomponent
-                    @component('components.inputGroup',['label'=>'Jumlah Peserta ',"type"=>"number","name"=>"jumlah_peserta","col"=>"col-md-5"]) @endcomponent
-                     
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label  class="col-form-label" for="amount">Harga Paket </label>
-                        </div>
-                        <div class="col-md-5">
-                            <input type="text" name="harga_paket" class="form-control" id="amount" placeholder="0">
-                        </div>
-                    </div>
+                    @component('components.inputGroup',['label'=>'Kode Pembayaran ',"name"=>"kode_pembayaran","col"=>"col-md-5"]) @endcomponent
+                    @component('components.inputGroup',['label'=>'Nama Pembayaran ',"name"=>"nama_pembayaran","col"=>"col-md-5"]) @endcomponent
+                    @component('components.textarea',['label'=>'Keterangan ',"name"=>"keterangan","col"=>"col-md-5"]) @endcomponent
+
+                      
                     <hr>
                     <div class="row d-flex">
                         <div class="col-md-6 d-flex">

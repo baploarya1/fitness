@@ -35,7 +35,7 @@ class TransaksiController extends Controller
     }
 
     public function ajaxLoadPaket(Request $request){
-        $data = Paket::select('kode_paket','nama_paket')->where('kode_kategori', $request->kode_kategori)->get();
+        $data = Paket::select('kode_paket','nama_paket')->where('kode_kategori', $request->kode_kategori)->where('type', '!=', 'z')->get();
         // echo "<option value=''>-Pilih Paket-</option>";
         foreach ($data as $d) {
             echo "<option value='$d[kode_paket]'>$d[nama_paket]</option>";
@@ -109,8 +109,7 @@ class TransaksiController extends Controller
                 'tanggal_transaksi' => 'nullable|date',
                 'kode_paket' => 'nullable|string|max:255',
                 'keterangan' => 'nullable|string',
-                'status' => 'nullable|string|max:255',
-                 
+                'status' => 'nullable|string|max:255'             
                 
             ]);
             if(isset($request->id)){

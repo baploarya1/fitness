@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 use Illuminate\Validation\ValidationException;
 use App\Models\Paket;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+ 
 class PaketController extends Controller
 {
     /**
@@ -32,7 +34,9 @@ class PaketController extends Controller
     public function create()
     {
         //
-        return view('paket.create');
+        $kategoris = Kategori::select('kode_kategori','nama_kategori')->where('type', '!=', 'z')->get();
+
+        return view('paket.create',compact('kategoris'));
     }
 
     /**

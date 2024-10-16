@@ -9,6 +9,7 @@ class Pembayaran extends Model
 {
     use HasFactory;
     protected $table = 'pembayaran';
+    protected $fillable = ['kode_pembayaran','nama_pembayaran','keterangan','type','username','user_id'];
 
     public function scopeFilter($query, array $filters)
     {

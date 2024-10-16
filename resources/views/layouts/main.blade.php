@@ -87,6 +87,16 @@
                     <i class="fas fa-users"></i>
                     <span>Member</span></a>
             </li>
+            <li class="nav-item mt-2">
+                <a class="nav-link" href="/aksesoris">
+                    <i class="fas fa-drum-steelpan"></i>
+                    <span>Aksesoris</span></a>
+            </li>
+            <li class="nav-item mt-2">
+                <a class="nav-link" href="/pembayaran">
+                    <i class="fas fa-money-check"></i>
+                    <span>Metode Pembayaran</span></a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="/paket">
                     <i class="fas fa-box-open"></i>

@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AksesorisController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaketController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,12 +32,16 @@ Route::middleware('auth')->group(
         Route::resource('/member', MemberController::class);
         Route::resource('/paket', PaketController::class);
         Route::resource('/transaksi', TransaksiController::class);
+        Route::resource('/pembayaran', PembayaranController::class);
+        Route::resource('/aksesoris', AksesorisController::class);
         Route::get('/members', [MemberController::class, 'index']);
         Route::get('/pakets', [PaketController::class, 'index']);
         Route::get('/cetak-pembayaran/{id}', [TransaksiController::class, 'cetakPembayaran']);
         Route::post('/hapus-member', [MemberController::class,'hapusMember']);
         Route::post('/hapus-transaksi', [TransaksiController::class,'hapusTransaksi']);
         Route::post('/hapus-paket', [PaketController::class,'hapusPaket']);
+        Route::post('/hapus-pembayaran', [PembayaranController::class,'hapusPembayaran']);
+        Route::post('/hapus-aksesoris', [AksesorisController::class,'hapusAksesoris']);
         // Route::post('/transaksi', [TransaksiController::class,'store']);
         Route::post('/ajax-load-paket', [TransaksiController::class, 'ajaxLoadPaket'])->name('ajax.load.paket');
     }
