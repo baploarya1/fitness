@@ -57,7 +57,10 @@
                     @component('components.inputGroup',['label'=>'Nomor Transaksi ',"value"=>$transaksi->nomor_transaksi,"name"=>"nomor_transaksi","col"=>"col-md-5"]) @endcomponent
                     @component('components.inputTanggal',['label'=>'Tanggal Transaksi',"name"=>"tanggal_transaksi" ,"value"=>$transaksi->tanggal_transaksi??$current,"placeholder"=>"Last name", "col"=>"col-md-5",
                    ]) @endcomponent
-                    
+                     @component('components.inputTanggal',['label'=>'Tanggal Mulai Berlaku',"name"=>"tanggal_mulai_berlaku" ,"value"=>$transaksi->tanggal_mulai_berlaku??$current,"placeholder"=>"Last name", "col"=>"col-md-5",
+                   ]) @endcomponent
+                     @component('components.inputTanggal',['label'=>'Tanggal Habis Berlaku',"name"=>"tanggal_habis_berlaku" ,"value"=>$transaksi->tanggal_habis_berlaku??$current,"placeholder"=>"Last name", "col"=>"col-md-5",
+                   ]) @endcomponent
                     @component('components.select',['label'=>'Paket',"value"=>$transaksi->kode_paket,"type"=>"obj","name"=>"kode_paket" ,'key1'=>'kode_paket','key2'=>'nama_paket','col'=>'col-lg-8 col-sm-6',"placeholder"=>"Pilih Paket", "options"=>$pakets])
                    
                     @endcomponent

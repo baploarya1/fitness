@@ -29,7 +29,7 @@ class KategoriSeeder extends Seeder
         ]);
         DB::table('kategori')->insert([
             'kode_kategori' => "CO0003",
-            'nama_kategori' => "INDIIDUAL",
+            'nama_kategori' => "INDIVIDUAL",
             'type' => "a",
             
         ]);

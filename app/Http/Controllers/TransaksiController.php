@@ -107,6 +107,8 @@ class TransaksiController extends Controller
                 'nomor_transaksi' => 'nullable|string|max:255',
                 'kode_pembayaran' => 'nullable|string|max:255',
                 'tanggal_transaksi' => 'nullable|date',
+                'tanggal_mulai_berlaku' => 'nullable|date',
+                'tanggal_habis_berlaku' => 'nullable|date',
                 'kode_paket' => 'nullable|string|max:255',
                 'keterangan' => 'nullable|string',
                 'status' => 'nullable|string|max:255'             
@@ -117,7 +119,7 @@ class TransaksiController extends Controller
                 $member->type = 'z';
                 $member->save();
             }
-            $request->validate(['nomor_member' => ['required','string','max:255',Rule::unique('transaksi')->where(function ($query) {
+            $request->validate(['nomor_transaksi' => ['string','max:255',Rule::unique('transaksi')->where(function ($query) {
                             return $query->where('type', 'a');
                         }),
             ]]);
@@ -130,6 +132,8 @@ class TransaksiController extends Controller
                 'nomor_transaksi' => $request->nomor_transaksi,
                 'kode_pembayaran' => $request->kode_pembayaran,
                 'tanggal_transaksi' => $request->tanggal_transaksi,
+                'tanggal_mulai_berlaku' => $request->tanggal_mulai_berlaku,
+                'tanggal_habis_berlaku' => $request->tanggal_habis_berlaku,
                 'kode_paket' => $request->kode_paket,
                 'keterangan' => $request->keterangan,
                 'status' => $request->status,

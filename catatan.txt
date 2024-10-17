@@ -9,3 +9,15 @@ harga
 type
 user_id
 username
+
+jalan kan perintah berikut
+php artisan migrate
+php artisan db:seed
+php artisan storage:link
+
+tambahan:
+search nama di member
+no_ktp
+kode_member
+nama
+alamat
