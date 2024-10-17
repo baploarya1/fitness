@@ -59,6 +59,7 @@ class PaketController extends Controller
                 'tanggal_mulai_berlaku' => 'nullable|date',
                 'tanggal_habis_berlaku' => 'nullable|date',
                 'jumlah_peserta' => 'nullable|integer',
+                'durasi' => 'nullable|integer',
                 'harga_paket' => 'nullable',
                 'status' => 'nullable|string', // Contoh status, sesuaikan dengan kebutuhan
                 'type' => 'nullable|string' // Contoh tipe, sesuaikan dengan kebutuhan
@@ -69,8 +70,8 @@ class PaketController extends Controller
                 $member->save();
             }
             $request->validate(['kode_paket' => ['required','string','max:255',Rule::unique('paket')->where(function ($query) {
-                            return $query->where('type', 'a');
-                        }),
+                    return $query->where('type', 'a');
+            }),
             ]]);
             $user = Auth::user();
             $hargaPaket = number_format((float)str_replace(',', '', $request->harga_paket), 2, '.', '');
@@ -80,6 +81,7 @@ class PaketController extends Controller
                 'kode_paket' => $request->kode_paket,
                 'nama_paket' => $request->nama_paket,
                 'kode_kategori' => $request->kode_kategori,
+                'durasi' => (string)$request->durasi ." Bulan",
                 'tanggal_mulai_berlaku' => $request->tanggal_mulai_berlaku,
                 'tanggal_habis_berlaku' => $request->tanggal_habis_berlaku,
                 'jumlah_peserta' => $request->jumlah_peserta,
@@ -120,10 +122,12 @@ class PaketController extends Controller
     {
         //
         $paket = Paket::find($id);
-        
+        $kategoris = Kategori::select('kode_kategori','nama_kategori')->where('type', '!=', 'z')->get();
+
 
         return view('paket.edit',[
-            "paket"=>$paket
+            "paket"=>$paket,
+            "kategoris"=>$kategoris
         ]);
     }
 

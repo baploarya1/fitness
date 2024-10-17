@@ -54,7 +54,7 @@ class AksesorisController extends Controller
                 'kode_aksesoris' => 'required|string|max:50',
                 'nama_aksesoris' => 'required|string|max:100',
                 'stok_awal' => 'nullable|integer',
-                'stok_akhir' => 'nullable|integer',
+                // 'stok_akhir' => 'nullable|integer',
                 'barang_masuk' => 'nullable|integer',
                 'harga' => 'nullable',
                  // Contoh tipe, sesuaikan dengan kebutuhan
@@ -76,7 +76,7 @@ class AksesorisController extends Controller
                 'kode_aksesoris' => $request->kode_aksesoris,
                 'nama_aksesoris' => $request->nama_aksesoris,
                 'stok_awal' => $request->stok_awal,
-                'stok_akhir' => $request->stok_akhir,
+                // 'stok_akhir' => $request->stok_akhir,
                 'barang_masuk' => $request->barang_masuk,
                 'harga' => $harga,
                 'type' => "a",
@@ -89,7 +89,7 @@ class AksesorisController extends Controller
         //     dd($errors);exit;
         //   }
           
-        return redirect()->route('paket.index')->with('success', 'Member berhasil ditambahkan!');
+        return redirect()->route('aksesoris.index')->with('success', 'Member berhasil ditambahkan!');
 
     }
 

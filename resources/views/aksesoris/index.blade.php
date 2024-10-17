@@ -19,7 +19,7 @@
                 <div class="row">
                   
                   <div class="col-sm-12 col-md-4">
-                    <a   href="{{ route('aksesoris.create') }}"class="btn mt-2 btn-login w-75 btn-success">Tambah aksesoris</a>
+                    <a href="{{ route('aksesoris.create') }}"class="btn mt-2 btn-login w-75 btn-success">Tambah aksesoris</a>
                   </div>
                   <div class="col-sm-12 col-md-8 d-flex justify-content-end">
                     <div id="dataTable_filter" class="dataTables_filter mr-3">
@@ -70,7 +70,7 @@
                             {{ $aksesoris->nama_aksesoris }}
                           </td>
                           <td>
-                            {{ $aksesoris->harga }}
+                            {{ isset($aksesoris->harga) ?"Rp." . number_format($aksesoris->harga, 0, ',', '.') :'';  }}
                           </td>
                           <td class=" ">
                               <a href="{{ route('aksesoris.edit', $aksesoris->id) }}" data-bs-toggle="tooltip" title="Edit" class="p-2"><i class="fa fa-edit text-primary "></i>

@@ -2,6 +2,7 @@
 @extends('layouts.main',['label'=>'Laporan Pembelian'])
   
 @php
+    // dd($aksesoris->stok_awal);
     // dd(number_format($paket->harga_paket, 0, '.', ','));exit;
 @endphp
 @section('content')
@@ -31,9 +32,9 @@
                     </div>
                 </div>
 
-                @component('components.inputGroup',['label'=>'Barang Masuk ',"type"=>"number","name"=>"barang_masuk","value"=>$aksesoris->barang_masuk,"col"=>"col-md-5"]) @endcomponent
-                @component('components.inputGroup',['label'=>' Stok Awal ',"type"=>"number","name"=>"stok_awal","value"=>$aksesoris->stok_awal,"col"=>"col-md-5"]) @endcomponent
-                @component('components.inputGroup',['label'=>' Stok Akhir ',"type"=>"number","name"=>"stok_akhir","value"=>$aksesoris->stok_akhir,"col"=>"col-md-5"]) @endcomponent
+                @component('components.inputGroup',['label'=>'Barang Masuk ',"type"=>"number","name"=>"barang_masuk","value"=> (int)$aksesoris->barang_masuk,"col"=>"col-md-5"]) @endcomponent
+                @component('components.inputGroup',['label'=>' Stok Awal ',"type"=>"number","name"=>"stok_awal","value"=>(int)$aksesoris->stok_awal,"col"=>"col-md-5"]) @endcomponent
+                {{-- @component('components.inputGroup',['label'=>' Stok Akhir ',"type"=>"number","name"=>"stok_akhir","value"=>$aksesoris->stok_akhir,"col"=>"col-md-5"]) @endcomponent --}}
                 
                      
                     <hr>

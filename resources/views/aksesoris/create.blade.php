@@ -63,7 +63,7 @@
 
                     @component('components.inputGroup',['label'=>'Barang Masuk ',"type"=>"number","name"=>"barang_masuk","col"=>"col-md-5"]) @endcomponent
                     @component('components.inputGroup',['label'=>' Stok Awal ',"type"=>"number","name"=>"stok_awal","col"=>"col-md-5"]) @endcomponent
-                    @component('components.inputGroup',['label'=>' Stok Akhir ',"type"=>"number","name"=>"stok_akhir","col"=>"col-md-5"]) @endcomponent
+                    {{-- @component('components.inputGroup',['label'=>' Stok Akhir ',"type"=>"number","name"=>"stok_akhir","col"=>"col-md-5"]) @endcomponent --}}
                     
                     <hr>
                     <div class="row d-flex">

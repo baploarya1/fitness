@@ -62,6 +62,7 @@
                     @component('components.select',['label'=>'Status',"type"=>"arr","name"=>"status" ,'key1'=>'nama','key2'=>'nama','col'=>'col-lg-8 col-sm-6',"placeholder"=>"Pilih Status", "options"=>[["nama"=>"Aktif"],["nama"=>"Tidak Aktif"]]])
                     @endcomponent
                     @component('components.inputGroup',['label'=>'Jumlah Peserta ',"type"=>"number","name"=>"jumlah_peserta","col"=>"col-md-5"]) @endcomponent
+                    @component('components.inputGroup',['label'=>'Durasi (Bulan) ',"type"=>"number","name"=>"durasi","col"=>"col-md-5"]) @endcomponent
                      
                     <div class="form-group row">
                         <div class="col-sm-2">

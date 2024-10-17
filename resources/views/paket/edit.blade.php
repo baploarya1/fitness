@@ -1,8 +1,17 @@
 <?php  $current = now()->format('Y-m-d'); //var_dump($current); exit; ?>
 @extends('layouts.main',['label'=>'Laporan Pembelian'])
   
+
 @php
-    // dd(number_format($paket->harga_paket, 0, '.', ','));exit;
+    //dd($paket->durasi)
+function ubahBulanKeAngka($input) {
+    // Menghapus kata "bulan" dan spasi
+    $angka = preg_replace('/[^0-9]/', '', $input);
+    return (int) $angka; // Mengembalikan sebagai integer
+}
+
+// $hasil = ubahBulanKeAngka("3 bulan");
+
 @endphp
 @section('content')
  
@@ -21,8 +30,9 @@
 
                 @component('components.inputGroup',['label'=>'Kode Paket ',"value"=>$paket->kode_paket,"name"=>"kode_paket","col"=>"col-md-5"]) @endcomponent
                     @component('components.inputGroup',['label'=>'Nama Paket ',"value"=>$paket->nama_paket,"name"=>"nama_paket","col"=>"col-md-5"]) @endcomponent
-                    @component('components.inputGroup',['label'=>'Kategori ',"value"=>$paket->kategori,"name"=>"kategori","col"=>"col-md-5"]) @endcomponent
-                     
+                    
+                    @component('components.select',['label'=>'Kategori',"value"=>$paket->kode_kategori,"type"=>"obj","name"=>"kode_kategori" ,'key1'=>'kode_kategori','key2'=>'nama_kategori','col'=>'col-lg-8 col-sm-6',"placeholder"=>"Pilih Kategori", "options"=>$kategoris])
+                    @endcomponent
                     @component('components.inputTanggal',['label'=>'Tanggal Mulai Berlaku',"value"=>$paket->tanggal_mulai_berlaku,"name"=>"tanggal_mulai_berlaku" ,"placeholder"=>"Last name", "col"=>"col-md-5",
                     "value"=>$current]) @endcomponent
                     @component('components.inputTanggal',['label'=>'Tanggal Habis Berlaku',"value"=>$paket->tanggal_habis_berlaku,"name"=>"tanggal_habis_berlaku" ,"placeholder"=>"Last name", "col"=>"col-md-5",
@@ -30,6 +40,7 @@
                     @component('components.select',['label'=>'Status',"type"=>"arr","value"=>$paket->status,"name"=>"status" ,'key1'=>'nama','key2'=>'nama','col'=>'col-lg-8 col-sm-6',"placeholder"=>"Pilih Status", "options"=>[["nama"=>"Aktif"],["nama"=>"Tidak Aktif"]]])
                     @endcomponent
                     @component('components.inputGroup',['label'=>'Jumlah Peserta ',"type"=>"number","value"=>$paket->jumlah_peserta,"name"=>"jumlah_peserta","col"=>"col-md-5"]) @endcomponent
+                    @component('components.inputGroup',['label'=>'Durasi (Bulan)',"type"=>"number","value"=>isset($paket->durasi)?ubahBulanKeAngka($paket->durasi):0,"name"=>"durasi","col"=>"col-md-5"]) @endcomponent
                      
                     <div class="form-group row">
                         <div class="col-sm-2">
