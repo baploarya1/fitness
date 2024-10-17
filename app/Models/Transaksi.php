@@ -9,7 +9,7 @@ class Transaksi extends Model
 {
     use HasFactory;
     protected $table = 'transaksi';
-    protected $fillable = ['nomor_member','kode_paket','nomor_transaksi','kode_pembayaran','tanggal_transaksi','keterangan','status','type','username','user_id'];
+    protected $fillable = ['nomor_member','kode_paket','nomor_transaksi','kode_pembayaran','tanggal_transaksi','keterangan','status','type','username','user_id','tanggal_mulai_berlaku','tanggal_habis_berlaku'];
     public function scopeFilter($query, array $filters)
     {
         // dd($filters);
@@ -20,5 +20,9 @@ class Transaksi extends Model
         });
 
         
+    }
+    public function member()
+    {
+        return $this->hasOne(Member::class, 'kode_member', 'kode_member');
     }
 }

@@ -41,39 +41,39 @@
              <tbody  >
                 <br>
                 <tr >
-                    <td style="text-align:center;font-size:15px; border: 2px solid gray; ">  {{$transaksi->nomor_member}} </td>
-                    <td style="text-align:center;font-size:15px; border: 2px solid gray; "> {{$transaksi->nomor_ktp}}    </td>
+                    <td style="text-align:center;font-size:15px; border: 2px solid gray; ">  {{$transaksi->nomor_member??''}} </td>
+                    <td style="text-align:center;font-size:15px; border: 2px solid gray; "> {{$transaksi->nomor_ktp??''}}    </td>
                     <td style="text-align:center;font-size:15px; border: 2px solid gray; ">  {{$transaksi->jenis_kelamin =="L"?"MALE":"FEMALE"}}     </td>
                 </tr>
               
             </tbody>
         </table>
         <div style="margin-top: 5px">FULLNAME</div>
-        <div style="text-align:center;font-size:15px; margin-top:0px; border: 2.5px solid gray; "> {{$transaksi->nama_member}}</div>
+        <div style="text-align:center;font-size:15px; margin-top:0px; border: 2.5px solid gray; "> {{$transaksi->nama_member??''}}</div>
         <div style="margin-top: 5px">HOME ADDRESS</div>
-        <div style="text-align:center;font-size:15px; margin-top:0px; border: 2.5px solid gray; ">{{$transaksi->alamat}}</div>
+        <div style="text-align:center;font-size:15px; margin-top:0px; border: 2.5px solid gray; ">{{$transaksi->alamat??''}}</div>
        <div style="width: 50%;margin-top: 5px">
         <div>BIRTH DATE</div>
-        <div style="text-align:center;font-size:15px; margin-top:0px; border: 2.5px solid gray; ">{{$transaksi->tanggal_lahir}}</div>
+        <div style="text-align:center;font-size:15px; margin-top:0px; border: 2.5px solid gray; ">{{$transaksi->tanggal_lahir??''}}</div>
        </div>
        <div style="width: 50%;margin-top: -3.05rem;margin-left: 25rem">
         <div>BIRTH PLACE</div>
-        <div style="text-align:center;font-size:15px; margin-top:0px; border: 2.5px solid gray; "> {{$transaksi->tempat_lahir}}</div>
+        <div style="text-align:center;font-size:15px; margin-top:0px; border: 2.5px solid gray; "> {{$transaksi->tempat_lahir??''}}</div>
        </div>
        <div style="width: 50%;margin-top: 5px">
         <div>JOB</div>
-        <div style="text-align:center;font-size:15px; margin-top:0px; border: 2.5px solid gray; "> {{$transaksi->pekerjaan}}</div>
+        <div style="text-align:center;font-size:15px; margin-top:0px; border: 2.5px solid gray; "> {{$transaksi->pekerjaan??''}}</div>
        </div>
        <div style="width: 50%;margin-top: -3.05rem;margin-left: 25rem">
         <div>PHONE NUMBER</div>
-        <div style="text-align:center;font-size:15px; margin-top:0px; border: 2.5px solid gray; ">{{$transaksi->nomor_handphone}}</div>
+        <div style="text-align:center;font-size:15px; margin-top:0px; border: 2.5px solid gray; ">{{$transaksi->nomor_handphone??''}}</div>
        </div>
        
          
         {{-- <p style="font-size:15px;">dasdadsa</p>
         <p style="width:15rem; text-align:center;font-size:15px; border: 3px solid gray; "> Arya    </p> --}}
         <h3>MEMBERSHIP CATEGORY</h3>
-        <div style="font-size: 15px">{{$transaksi->nama_paket}}</div> 
+        <div style="font-size: 15px">{{$transaksi->nama_paket??''}}</div> 
          
         <div style="margin-left: 35rem; margin-top: -5rem">
             <h3>ADD ON LESSON</h3>
@@ -104,10 +104,10 @@
             <table>
                 <thead>
                     <tr>
-                        <th style="font-weight: 300; text-align:left">{{$transaksi->nama_pembayaran}}</th>
+                        <th style="font-weight: 300; text-align:left">{{$transaksi->nama_pembayaran??''}}</th>
                     <th style="width: 1rem"></th>
 
-                        <th> <strong>{{"Rp" . number_format($transaksi->harga_paket, 0, ',', '.')}}</strong><hr style="width: 100%"></th>
+                        <th> <strong>{{$transaksi->harga_paket?"Rp" . number_format($transaksi->harga_paket, 0, ',', '.'):0}}</strong><hr style="width: 100%"></th>
                     </tr>
                     
                 </thead>
@@ -119,19 +119,19 @@
             <thead>
                 <tr>
                     <th width="9rem" style="font-weight: 300; text-align:left">MEMBER NO</th>
-                    <th width="9rem"> {{$transaksi->nomor_member}}   <hr style="width: 90%; padding-top:0"></th>
+                    <th width="9rem"> {{$transaksi->nomor_member??''}}   <hr style="width: 90%; padding-top:0"></th>
                     <th width="8rem"></th>
 
                     <th width="9rem" style="font-weight: 300; text-align:left ;margin-top:15px">OFFICIAL RECEIPT</th>
-                    <th width="9rem"> <p style="padding-bottom: 0px">  {{$transaksi->tanggal_mulai_berlaku}}</p> <hr style="width: 90%"></th>
+                    <th width="9rem"> <p style="padding-bottom: 0px">  {{$transaksi->tanggal_mulai_berlaku??''}}</p> <hr style="width: 90%"></th>
                 </tr>
                 <tr>
                     <th style="font-weight: normal; text-align:left">DATE JOINING</th>
-                    <th > {{$transaksi->tanggal_registrasi}}  <hr style="width: 90%"></th>
+                    <th > {{$transaksi->tanggal_registrasi??''}}  <hr style="width: 90%"></th>
                     <th width="8rem"></th>
 
                     <th style="font-weight: 300; text-align:left;margin-top:15px">EXPIRED DATE</th>
-                    <th  > {{$transaksi->tanggal_habis_berlaku}}<hr style="width: 90%"></th>
+                    <th  > {{$transaksi->tanggal_habis_berlaku??''}}<hr style="width: 90%"></th>
                 </tr>
                 
             </thead>

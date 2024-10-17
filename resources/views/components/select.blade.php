@@ -1,7 +1,7 @@
 
 
 <?php //var_dump($value); exit;?>
-<div class="form-group row mt-2">
+<div class="form-group row mt-2 mb-0">
     <!-- <div class="col-sm-2 "> -->
     <div class="col-lg-2 col-sm-6">
         <label class="col-form-label " for="exampleFormControlSelect1">{{$label}}</label>
@@ -30,5 +30,14 @@
         {{$slot}}
     {{-- </div> --}}
    </div>
+   
+<div class="row ">
+    <div class="col-md-2"></div>
+    <div class="col-md-3 text-left mb-2 mt-0">
+            @error($name)  
+                <div class="text-danger mb-0" role="alert">  {{$message}} </div>
+            @enderror
+        </div>
+    </div>
 
    

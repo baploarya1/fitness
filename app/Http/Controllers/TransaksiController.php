@@ -69,7 +69,7 @@ class TransaksiController extends Controller
         ->join('paket', 'transaksi.kode_paket', '=', 'paket.kode_paket')
         ->join('pembayaran', 'transaksi.kode_pembayaran', '=', 'pembayaran.kode_pembayaran')
         ->where('transaksi.id', $request->id)
-        // ->select('transaksi.*', 'member.*')
+        ->select('transaksi.*', 'member.*', 'transaksi.*','paket.kode_paket','paket.nama_paket','paket.harga_paket')
         ->first();
     
         // dd($transaksi);
@@ -97,19 +97,21 @@ class TransaksiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
+    
     public function store(Request $request)
     {
         //
-        try{
-            // dd($request->all());
+        // try{
+            
             $request->validate([
-                'nomor_member' => 'nullable|string|max:255',
-                'nomor_transaksi' => 'nullable|string|max:255',
+                'nomor_member' => 'required|string|max:255',
+                'nomor_transaksi' => 'required|string|max:255',
                 'kode_pembayaran' => 'nullable|string|max:255',
                 'tanggal_transaksi' => 'nullable|date',
-                'tanggal_mulai_berlaku' => 'nullable|date',
-                'tanggal_habis_berlaku' => 'nullable|date',
-                'kode_paket' => 'nullable|string|max:255',
+                'tanggal_mulai_berlaku' => 'required|date',
+                // 'tanggal_habis_berlaku' => 'nullable|date',
+                'kode_paket' => 'required|string|max:255',
                 'keterangan' => 'nullable|string',
                 'status' => 'nullable|string|max:255'             
                 
@@ -124,7 +126,11 @@ class TransaksiController extends Controller
                         }),
             ]]);
             $user = Auth::user();
-    
+            $paket = Paket::where('kode_paket', $request->kode_paket)->where('type', '!=', 'z')->first(); // Mengambil data User dengan email tertentu
+            $angka = explode(" ", $paket->durasi);
+            
+            $tanggalPlusBulan = date('Y-m-d', strtotime("+".$angka[0]." months", strtotime($request->tanggal_mulai_berlaku)));
+ 
            
             // Simpan data member ke database
             Transaksi::create([
@@ -133,7 +139,7 @@ class TransaksiController extends Controller
                 'kode_pembayaran' => $request->kode_pembayaran,
                 'tanggal_transaksi' => $request->tanggal_transaksi,
                 'tanggal_mulai_berlaku' => $request->tanggal_mulai_berlaku,
-                'tanggal_habis_berlaku' => $request->tanggal_habis_berlaku,
+                'tanggal_habis_berlaku' => $tanggalPlusBulan,
                 'kode_paket' => $request->kode_paket,
                 'keterangan' => $request->keterangan,
                 'status' => $request->status,
@@ -141,16 +147,22 @@ class TransaksiController extends Controller
                 'username' =>  $user->name,
                 'user_id' => $user->id,
             ]);
-        } catch (ValidationException $e) {
-            // Menangkap kesalahan validasi
-            $errors = $e->validator->errors();
-            // dd($errors);exit;
-          }
+        // } catch (ValidationException $e) {
+        //     // Menangkap kesalahan validasi
+        //     $errors = $e->validator->errors();
+        //     // dd($errors);exit;
+        //   }
         // dd($request->all());
        
    
 
     return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil ditambahkan!');
+    }
+     function getNumberFromStrings($str) {
+        // Memisahkan string berdasarkan spasi
+        $parts = explode(" ", $str);
+        // Mengembalikan elemen pertama yang seharusnya adalah angka
+        return isset($parts[0]) ? (int)$parts[0] : null;
     }
     public function hapusTransaksi(Request $request)
     {

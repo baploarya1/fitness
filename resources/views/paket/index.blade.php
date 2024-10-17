@@ -50,7 +50,7 @@
                           </th>
                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                           colspan="1" aria-label="Office: activate to sort column ascending" style="width: 49px;">
-                         Kategori 
+                         Durasi 
                           </th>
                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                           colspan="1" aria-label="Age: activate to sort column ascending" style="width: 31px;">
@@ -70,7 +70,7 @@
                             {{ $paket->nama_paket }}
                           </td>
                           <td>
-                            {{ $paket->kategori }}
+                            {{ $paket->durasi }}
 
                           </td>
                           <td class=" ">
