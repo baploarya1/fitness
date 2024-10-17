@@ -42,34 +42,26 @@
 
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Tambah Data Aksesoris</h1>
+    <h1 class="h3 mb-0 text-gray-800">Tambah Data user</h1>
     </div>
     <div class="card">
         <div class="card-body">
-             <form class='mt-2' enctype="multipart/form-data" action="{{ route('aksesoris.store') }}" id="myForm" method="POST">
+            <form class='mt-2'action="{{ route('user.store') }}" id="myForm"enctype="multipart/form-data" method="POST">
                 @csrf                           
-                    @component('components.inputGroup',['label'=>'Kode aksesoris ',"name"=>"kode_aksesoris","col"=>"col-md-5"]) @endcomponent
-                    @component('components.inputGroup',['label'=>'Nama aksesoris ',"name"=>"nama_aksesoris","col"=>"col-md-5"]) @endcomponent
-                   
+                @component('components.inputGroup',['label'=>'Username','name'=>'username',"col"=>"col-md-5"]) @endcomponent
                     
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label  class="col-form-label" for="amount">Harga </label>
-                        </div>
-                        <div class="col-md-5">
-                            <input type="text" name="harga" class="form-control" id="amount" placeholder="0">
-                        </div>
-                    </div>
+                @component('components.inputGroup',['label'=>'Email','name'=>'email',"col"=>"col-md-5"]) @endcomponent
+                @component('components.select',['label'=>'Role','name'=>'role','key1'=>'text','key2'=>'text',"type"=>"arr","name"=>"role" ,"placeholder"=>"Role ",'col'=>'col-lg-5 col-sm-6', "options"=> [ ['text' => 'Admin' ],['text' => 'Operator' ]]]) 
+            
+                @endcomponent
+                @component('components.inputGroup',['label'=>'Password','name'=>'password',"col"=>"col-md-5"]) @endcomponent
+                @component('components.inputGroup',['label'=>'Ulangi Password','name'=>'password_confirmation',"col"=>"col-md-5"]) @endcomponent
 
-                    @component('components.inputGroup',['label'=>'Barang Masuk ',"type"=>"number","name"=>"barang_masuk","col"=>"col-md-5"]) @endcomponent
-                    @component('components.inputGroup',['label'=>' Stok Awal ',"type"=>"number","name"=>"stok_awal","col"=>"col-md-5"]) @endcomponent
-                    @component('components.inputGroup',['label'=>' Stok Akhir ',"type"=>"number","name"=>"stok_akhir","col"=>"col-md-5"]) @endcomponent
-                    
                     <hr>
                     <div class="row d-flex">
                         <div class="col-md-6 d-flex">
                             
-                            <button  class="btn btn-primary w-50"  type="submit">Simpan</button>
+                            <button  class="btn btn-primary w-50"  type="submit">Register</button>
                         </div>
                     </div>
                                               

@@ -10,19 +10,31 @@
 
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Edit Data Paket</h1>
+    <h1 class="h3 mb-0 text-gray-800">Edit Data Aksesoris</h1>
     </div>
     <div class="card">
         <div class="card-body">
-             <form class='mt-2' enctype="multipart/form-data" action="{{ route('paket.store') }}" id="myForm" method="POST">
+             <form class='mt-2' enctype="multipart/form-data" action="{{ route('aksesoris.store') }}" id="myForm" method="POST">
                 @csrf                           
                    
-                <input type="hidden"name="id" value="{{$pembayaran->id}}">
+                <input type="hidden"name="id" value="{{$aksesoris->id}}">
+                @component('components.inputGroup',['label'=>'Kode aksesoris ',"name"=>"kode_aksesoris","value"=>$aksesoris->kode_aksesoris,"col"=>"col-md-5"]) @endcomponent
+                @component('components.inputGroup',['label'=>'Nama aksesoris ',"name"=>"nama_aksesoris","value"=>$aksesoris->nama_aksesoris,"col"=>"col-md-5"]) @endcomponent
+               
+                
+                <div class="form-group row">
+                    <div class="col-sm-2">
+                        <label  class="col-form-label" for="amount">Harga </label>
+                    </div>
+                    <div class="col-md-5">
+                        <input type="text" name="harga"value="{{isset($aksesoris->harga)? number_format($aksesoris->harga, 0, '.', ','): 0}}" class="form-control" id="amount" placeholder="0">
+                    </div>
+                </div>
 
-                    @component('components.inputGroup',['label'=>'Kode Pembayaran ',"value"=>$pembayaran->kode_pembayaran,"name"=>"kode_pembayaran","col"=>"col-md-5"]) @endcomponent
-                    @component('components.inputGroup',['label'=>'Nama Pembayaran ',"value"=>$pembayaran->nama_pembayaran,"name"=>"nama_pembayaran","col"=>"col-md-5"]) @endcomponent
-                    @component('components.textarea',['label'=>'Keterangan ',"value"=>$pembayaran->keterangan,"name"=>"keterangan","col"=>"col-md-5"]) @endcomponent
-
+                @component('components.inputGroup',['label'=>'Barang Masuk ',"type"=>"number","name"=>"barang_masuk","value"=>$aksesoris->barang_masuk,"col"=>"col-md-5"]) @endcomponent
+                @component('components.inputGroup',['label'=>' Stok Awal ',"type"=>"number","name"=>"stok_awal","value"=>$aksesoris->stok_awal,"col"=>"col-md-5"]) @endcomponent
+                @component('components.inputGroup',['label'=>' Stok Akhir ',"type"=>"number","name"=>"stok_akhir","value"=>$aksesoris->stok_akhir,"col"=>"col-md-5"]) @endcomponent
+                
                      
                     <hr>
                     <div class="row d-flex">

@@ -8,6 +8,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +44,9 @@ Route::middleware('auth')->group(
         Route::post('/hapus-pembayaran', [PembayaranController::class,'hapusPembayaran']);
         Route::post('/hapus-aksesoris', [AksesorisController::class,'hapusAksesoris']);
         // Route::post('/transaksi', [TransaksiController::class,'store']);
+        Route::resource('user', UserController::class);
+        Route::post('/hapus-user', [UserController::class,'hapusUser']);
+
         Route::post('/ajax-load-paket', [TransaksiController::class, 'ajaxLoadPaket'])->name('ajax.load.paket');
     }
 );

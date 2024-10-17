@@ -111,9 +111,15 @@ class AksesorisController extends Controller
      * @param  \App\Models\Aksesoris  $aksesoris
      * @return \Illuminate\Http\Response
      */
-    public function edit(Aksesoris $aksesoris)
+    public function edit( $id)
     {
         //
+        $aksesoris = Aksesoris::find($id);
+        
+
+        return view('aksesoris.edit',[
+            "aksesoris"=>$aksesoris
+        ]);
     }
 
     /**
