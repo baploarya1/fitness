@@ -55,7 +55,7 @@ class PaketController extends Controller
             $request->validate([
                 'kode_paket' => 'required|string|max:50',
                 'nama_paket' => 'required|string|max:100',
-                'kategori' => 'nullable|string|max:50',
+                'kode_kategori' => 'nullable|string|max:50',
                 'tanggal_mulai_berlaku' => 'nullable|date',
                 'tanggal_habis_berlaku' => 'nullable|date',
                 'jumlah_peserta' => 'nullable|integer',
@@ -79,7 +79,7 @@ class PaketController extends Controller
             Paket::create([
                 'kode_paket' => $request->kode_paket,
                 'nama_paket' => $request->nama_paket,
-                'kategori' => $request->kategori,
+                'kode_kategori' => $request->kode_kategori,
                 'tanggal_mulai_berlaku' => $request->tanggal_mulai_berlaku,
                 'tanggal_habis_berlaku' => $request->tanggal_habis_berlaku,
                 'jumlah_peserta' => $request->jumlah_peserta,
