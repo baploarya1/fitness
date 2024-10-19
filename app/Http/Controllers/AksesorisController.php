@@ -6,6 +6,7 @@ use App\Models\Aksesoris;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class AksesorisController extends Controller
 {
@@ -53,10 +54,11 @@ class AksesorisController extends Controller
             $request->validate([
                 'kode_aksesoris' => 'required|string|max:50',
                 'nama_aksesoris' => 'required|string|max:100',
+                'satuan' => 'required|string|max:100',
                 'stok_awal' => 'nullable|integer',
                 // 'stok_akhir' => 'nullable|integer',
-                'barang_masuk' => 'nullable|integer',
-                'harga' => 'nullable',
+                // 'barang_masuk' => 'nullable|integer',
+                'harga' => 'required',
                  // Contoh tipe, sesuaikan dengan kebutuhan
             ]);
             if(isset($request->id)){
@@ -76,8 +78,8 @@ class AksesorisController extends Controller
                 'kode_aksesoris' => $request->kode_aksesoris,
                 'nama_aksesoris' => $request->nama_aksesoris,
                 'stok_awal' => $request->stok_awal,
-                // 'stok_akhir' => $request->stok_akhir,
-                'barang_masuk' => $request->barang_masuk,
+                'satuan' => $request->satuan,
+                // 'barang_masuk' => $request->barang_masuk,
                 'harga' => $harga,
                 'type' => "a",
                 'username' => $user->name,

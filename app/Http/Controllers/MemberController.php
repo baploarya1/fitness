@@ -174,9 +174,12 @@ class MemberController extends Controller
     {
         //
         $id = $request->id;
+        $user = Auth::user();
 
         $member = Member::find($id);
         $member->type = 'z';
+        $member->username = $user->name;
+        $member->user_id = $user->id;
         $member->save();
         
         return redirect()->route('member.index')->with(['success' => 'Data Berhasil Dihapus!']);

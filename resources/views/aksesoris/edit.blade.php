@@ -21,6 +21,7 @@
                 <input type="hidden"name="id" value="{{$aksesoris->id}}">
                 @component('components.inputGroup',['label'=>'Kode aksesoris ',"name"=>"kode_aksesoris","value"=>$aksesoris->kode_aksesoris,"col"=>"col-md-5"]) @endcomponent
                 @component('components.inputGroup',['label'=>'Nama aksesoris ',"name"=>"nama_aksesoris","value"=>$aksesoris->nama_aksesoris,"col"=>"col-md-5"]) @endcomponent
+                @component('components.inputGroup',['label'=>'Satuan ',"name"=>"satuan","value"=>$aksesoris->satuan,"col"=>"col-md-5"]) @endcomponent
                
                 
                 <div class="form-group row">
@@ -32,7 +33,6 @@
                     </div>
                 </div>
 
-                @component('components.inputGroup',['label'=>'Barang Masuk ',"type"=>"number","name"=>"barang_masuk","value"=> (int)$aksesoris->barang_masuk,"col"=>"col-md-5"]) @endcomponent
                 @component('components.inputGroup',['label'=>' Stok Awal ',"type"=>"number","name"=>"stok_awal","value"=>(int)$aksesoris->stok_awal,"col"=>"col-md-5"]) @endcomponent
                 {{-- @component('components.inputGroup',['label'=>' Stok Akhir ',"type"=>"number","name"=>"stok_akhir","value"=>$aksesoris->stok_akhir,"col"=>"col-md-5"]) @endcomponent --}}
                 

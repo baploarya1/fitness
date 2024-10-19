@@ -51,6 +51,8 @@
                     @component('components.inputGroup',['label'=>'Kode aksesoris ',"name"=>"kode_aksesoris","col"=>"col-md-5"]) @endcomponent
                     @component('components.inputGroup',['label'=>'Nama aksesoris ',"name"=>"nama_aksesoris","col"=>"col-md-5"]) @endcomponent
                    
+                    @component('components.inputGroup',['label'=>'Satuan ',"name"=>"satuan","col"=>"col-md-5"]) @endcomponent
+                   
                     
                     <div class="form-group row">
                         <div class="col-sm-2">
@@ -60,8 +62,7 @@
                             <input type="text" name="harga" class="form-control" id="amount" placeholder="0">
                         </div>
                     </div>
-
-                    @component('components.inputGroup',['label'=>'Barang Masuk ',"type"=>"number","name"=>"barang_masuk","col"=>"col-md-5"]) @endcomponent
+ 
                     @component('components.inputGroup',['label'=>' Stok Awal ',"type"=>"number","name"=>"stok_awal","col"=>"col-md-5"]) @endcomponent
                     {{-- @component('components.inputGroup',['label'=>' Stok Akhir ',"type"=>"number","name"=>"stok_akhir","col"=>"col-md-5"]) @endcomponent --}}
                     

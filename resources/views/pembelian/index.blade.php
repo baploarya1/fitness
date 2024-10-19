@@ -1,14 +1,13 @@
-<?php //dd($aksesories[0]); ?>
+<?php //dd($pembelians[0]); ?>
 
-@extends('layouts.main',['label'=>'Data aksesoris'])
+@extends('layouts.main',['label'=>'Data pembelians'])
   
 @section('content')
-
-
+ 
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Aksesoris</h1>
+    <h1 class="h3 mb-2 text-gray-800">Pembelian</h1>
     
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -19,11 +18,11 @@
                 <div class="row">
                   
                   <div class="col-sm-12 col-md-4">
-                    <a href="{{ route('aksesoris.create') }}"class="btn mt-2 btn-login w-75 btn-success">Tambah aksesoris</a>
+                    <a   href="{{ route('pembelian.create') }}"class="btn mt-2 btn-login w-75 btn-success">Tambah pembelian</a>
                   </div>
                   <div class="col-sm-12 col-md-8 d-flex justify-content-end">
                     <div id="dataTable_filter" class="dataTables_filter mr-3">
-                      <form action="/aksesoris">
+                      <form action="/pembelian">
                         <label>
                           Search:
                           <input type="search" name="search" value="{{ request('search') }}"class="form-control form-control-sm" placeholder=""
@@ -39,18 +38,14 @@
                     cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                       <thead>
                         <tr role="row">
-                          <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
-                          rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending"
-                          style="width: 57px;">
-                          Kode aksesoris
-                          </th>
+                         
                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                           colspan="1" aria-label="Position: activate to sort column ascending" style="width: 61px;">
-                          Nama aksesoris
+                         Faktur
                           </th>
                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                           colspan="1" aria-label="Office: activate to sort column ascending" style="width: 49px;">
-                         harga
+                         Tanggal Pembelian
                           </th>
                           <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
                           colspan="1" aria-label="Age: activate to sort column ascending" style="width: 31px;">
@@ -61,21 +56,19 @@
                       </thead>
                     
                       <tbody>
-                        @foreach ($aksesories as $aksesoris)
+                        @foreach ($pembelians as $pembelian)
                         <tr class="odd">
-                          <td class="sorting_1">
-                            {{ $aksesoris->kode_aksesoris  }}
+                           
+                          <td>
+                            {{ $pembelian->faktur }}
                           </td>
                           <td>
-                            {{ $aksesoris->nama_aksesoris }}
-                          </td>
-                          <td>
-                            {{ isset($aksesoris->harga) ?"Rp." . number_format($aksesoris->harga, 0, ',', '.') :'';  }}
+                            {{ tanggal_indonesia($pembelian->tanggal_pembelian, false) }}
                           </td>
                           <td class=" ">
-                              <a href="{{ route('aksesoris.edit', $aksesoris->id) }}" data-bs-toggle="tooltip" title="Edit" class="p-2"><i class="fa fa-edit text-primary "></i>
+                              <a href="{{ route('pembelian.edit', $pembelian->faktur) }}" data-bs-toggle="tooltip" title="Edit" class="p-2"><i class="fa fa-edit text-primary "></i>
                                 </a>
-                                <a href="#"  data-id="{{ $aksesoris->id }}"   data-toggle="modal" data-target="#deleteModal" title="Hapus"
+                                <a href="#"  data-id="{{ $pembelian->faktur }}"   data-toggle="modal" data-target="#deleteModal" title="Hapus"
                                     class="p-2 tombolHapus"><i class="fa fa-trash text-danger"></i>
                                 </a>
                           </td>
@@ -103,11 +96,11 @@
 </div>
 {{-- modal --}}
 {{-- @php 
-  dd($aksesoris->id);
+  dd($pembelian->id);
 @endphp --}}
 @component('components.modal',['label'=>'Apakah kamu yakin ingin menghapus data ini?',"id"=>"deleteModal"])
 
-<form action="/hapus-aksesoris" method="post">
+<form action="/hapus-pembelian" method="post">
   @csrf
   <input type="hidden"name="id" id="inputID" >
    <button type="submit" class="btn btn-primary">Yakin</button>
@@ -117,12 +110,10 @@
 
 @endsection
 
-
 @push('script')
-    <script  >
-      console.log('dadas');
+    <script>
       $(document).ready(function() {
-        
+        // console.log('dasdas');
           $('.tombolHapus').click(function() {
               $('#inputID').val($(this).data('id'));
           })

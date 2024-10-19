@@ -168,9 +168,12 @@ class TransaksiController extends Controller
     {
         //
         $id = $request->id;
+        $user = Auth::user();
 
         $Transaksi = Transaksi::find($id);
         $Transaksi->type = 'z';
+        $Transaksi->username = $user->name;
+        $Transaksi->user_id = $user->id;
         $Transaksi->save();
         
         return redirect()->route('transaksi.index')->with(['success' => 'Data Berhasil Dihapus!']);

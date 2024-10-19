@@ -16,9 +16,11 @@
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/select2/css/select2.css">
-    <link href="{{ asset('assets/datatables/datatables.min.css') }}" />
+    {{-- <link href="{{ asset('assets/datatables/datatables.min.css') }}" /> --}}
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script> --}}
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -28,7 +30,7 @@
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
      
 </head>
-<script type="text/javascript" src="/js/jquery.min.js"></script>
+{{-- <script type="text/javascript" src="/js/jquery.min.js"></script> --}}
 
 <body id="page-top">
 
@@ -84,17 +86,17 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item mt-2">
+            <li class="nav-item mt-0">
                 <a class="nav-link" href="/member">
                     <i class="fas fa-users"></i>
                     <span>Member</span></a>
             </li>
-            <li class="nav-item mt-2">
+            <li class="nav-item mt-0">
                 <a class="nav-link" href="/aksesoris">
                     <i class="fas fa-drum-steelpan"></i>
                     <span>Aksesoris</span></a>
             </li>
-            <li class="nav-item mt-2">
+            <li class="nav-item mt-0">
                 <a class="nav-link" href="/pembayaran">
                     <i class="fas fa-money-check"></i>
                     <span>Metode Pembayaran</span></a>
@@ -115,6 +117,16 @@
                 <a class="nav-link" href="/transaksi">
                     <i class="fas fa-book"></i>
                     <span>Application Form</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/pembelian">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Pembelian</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/penjualan">
+                    <i class="fas fa-store"></i>
+                    <span>Penjualan</span></a>
             </li>
             <hr class="sidebar-divider">
 
@@ -137,13 +149,7 @@
                 </div>
             </li>
             
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
-
+           
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -232,6 +238,8 @@
             </nav>
             <!-- End of Main Content -->
             @yield('content')
+            @stack('script')
+
         </div>
         <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -278,12 +286,11 @@
     </a>
 
     
-    @include('layouts.footer')
-
+ 
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('assets/datatables/datatables.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/datatables/datatables.min.js') }}"></script> --}}
 
     <!-- Core plugin JavaScript-->
     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -294,34 +301,13 @@
     <!-- Page level plugins -->
     <script src="/vendor/chart.js/Chart.min.js"></script>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function() {
-            // Menetapkan opsi language secara global
-            $.extend(true, $.fn.dataTable.defaults, {
-                "language": {
-                    "emptyTable": "Data  Masi Kosong"
-                },
-
-            });
-        });
-    </script>
-    <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-    </script>
-
-
-    @stack('script')
-    <!-- Page level custom scripts -->
+        crossorigin="anonymous"></script> --}}
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
     <script src="/js/demo/chart-area-demo.js"></script>
     <script src="/js/demo/chart-pie-demo.js"></script>
+    
 
 </body>
 

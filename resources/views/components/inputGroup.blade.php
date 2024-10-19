@@ -11,7 +11,7 @@
     </div>
                     
     <div class="{{$col}}  input-group">
-        <input type="{{$type?? 'text'}}" class="form-control " value="{{ $value ?? old($name)}}" id="{{$label}}" name="{{$name}}" >
+        <input type="{{$type?? 'text'}}" {{isset($disabled) ?'disabled':''}} class="form-control " value="{{ $value ?? old($name)}}" id="{{$name}}" name="{{$name}}" placeholder="{{$placeholder??''}}" >
     </div>
     <br>
    

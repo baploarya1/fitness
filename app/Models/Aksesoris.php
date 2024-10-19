@@ -9,7 +9,7 @@ class Aksesoris extends Model
 {
     use HasFactory;
     protected $table = 'aksesoris';
-    protected $fillable = ['kode_aksesoris','nama_aksesoris','stok_awal','stok_akhir','barang_masuk','harga','type','username','user_id'];
+    protected $fillable = ['kode_aksesoris','nama_aksesoris','stok_awal','stok_akhir','satuan','barang_masuk','harga','type','username','user_id'];
 
     public function scopeFilter($query, array $filters)
     {

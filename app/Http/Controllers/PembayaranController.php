@@ -47,9 +47,12 @@ class PembayaranController extends Controller
     {
         //
         $id = $request->id;
+        $user = Auth::user();
 
         $pembayaran = Pembayaran::find($id);
         $pembayaran->type = 'z';
+        $pembayaran->username = $user->name;
+        $pembayaran->user_id = $user->id;
         $pembayaran->save();
         
         return redirect()->route('pembayaran.index')->with(['success' => 'Data Berhasil Dihapus!']);

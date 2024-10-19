@@ -9,7 +9,7 @@
     {{-- <!-- <div class="{{$col}} form-group">   --> --}}
     <div class="col-lg-5 col-sm-6 form-group">  
   
-        <select class="form-control select" name="{{$name}}"  id="{{$name}}">
+        <select  class="form-control select " {{isset($disabled) ?'disabled':''}}   name="{{$name}}"  id="{{$name}}">
             {{-- @if($value)
                  <option value=""> {{ $value}}  </option>
             @else
@@ -18,9 +18,9 @@
             @foreach($options as $option)
             {{-- value="{{ $value ?? old($name)}}" --}}
                 @if($type == 'obj')
-                    <option value="{{ $option->$key1 }} "{{isset($value)&& $value==$option->$key1 ? "selected" :null }}>{{ $option->$key2 }}</option>
+                    <option  value="{{ $option->$key1 }}"{{isset($value)&& $value==$option->$key1 ? "selected" :null }}>{{ isset($key3)? $option->$key3 .' | ' : ''}} {{ $option->$key2 }}  {{ isset($key4)? ' | ' .$option->$key4  : ''}}</option>
                 @else
-                    <option value="{{ $option[$key1] }} "{{isset($value)&& $value==$option[$key1] ? "selected" :null }} >{{ $option[$key2] }}</option>
+                    <option   value="{{ $option[$key1] }}"{{isset($value)&& $value==$option[$key1] ? "selected" :null }} >{{ isset($key3)? $option[$key3]: ''}} {{ $option[$key2] }} {{ isset($key4)? ' | ' .$option[$key4]: ''}}</option>
                 @endif 
 
             @endforeach

@@ -90,6 +90,7 @@ class PaketController extends Controller
                 'type' => "a",
                 'username' => $user->name,
                 'user_id' => $user->id
+               
             ]);
         // } catch (ValidationException $e) {
         //     // Menangkap kesalahan validasi
@@ -146,9 +147,12 @@ class PaketController extends Controller
     {
         //
         $id = $request->id;
+        $user = Auth::user();
 
         $paket = Paket::find($id);
         $paket->type = 'z';
+        $user->username = $user->name;
+        $user->user_id = $user->id;
         $paket->save();
         
         return redirect()->route('paket.index')->with(['success' => 'Data Berhasil Dihapus!']);

@@ -28,6 +28,7 @@
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3"
     },
+    
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
@@ -39,6 +40,9 @@
         }
     },
     "autoload": {
+        "files": [
+            "app/Http/Helpers/Helpers.php"  
+        ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",

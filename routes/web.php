@@ -7,8 +7,10 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
+use App\Models\Pembelian;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +36,7 @@ Route::middleware('auth')->group(
         Route::resource('/paket', PaketController::class);
         Route::resource('/transaksi', TransaksiController::class);
         Route::resource('/pembayaran', PembayaranController::class);
+        Route::resource('/pembelian', PembelianController::class);
         Route::resource('/aksesoris', AksesorisController::class);
         Route::get('/members', [MemberController::class, 'index']);
         Route::get('/pakets', [PaketController::class, 'index']);
@@ -43,6 +46,7 @@ Route::middleware('auth')->group(
         Route::post('/hapus-paket', [PaketController::class,'hapusPaket']);
         Route::post('/hapus-pembayaran', [PembayaranController::class,'hapusPembayaran']);
         Route::post('/hapus-aksesoris', [AksesorisController::class,'hapusAksesoris']);
+        Route::post('/hapus-pembelian', [PembelianController::class,'hapusPembelian']);
         // Route::post('/transaksi', [TransaksiController::class,'store']);
         Route::resource('user', UserController::class);
         Route::post('/hapus-user', [UserController::class,'hapusUser']);
