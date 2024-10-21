@@ -149,7 +149,7 @@ class PaketController extends Controller
         $id = $request->id;
         $user = Auth::user();
 
-        $paket = Paket::find($id);
+        $paket = Paket::where('id', $id)->where('type', 'a')->firstOrFail();
         $paket->type = 'z';
         $user->username = $user->name;
         $user->user_id = $user->id;

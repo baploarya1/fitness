@@ -1,5 +1,5 @@
 <?php  $current = now()->format('Y-m-d'); //var_dump($current); exit; ?>
-@extends('layouts.main',['label'=>'Laporan Pembelian'])
+@extends('layouts.main',['label'=>'Laporan Penjualan'])
   
 @section('content')
 
@@ -42,7 +42,7 @@
 
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Tambah Data Pembelian</h1>
+    <h1 class="h3 mb-0 text-gray-800">Tambah Data Penjualan</h1>
     </div>
     <div class="card">
         <div class="card-body">
@@ -92,7 +92,7 @@
                    
                   <div class="row">
                     <div class="col-sm-12">
-                      <table id="tablePembelian" class="table table-bordered dataTable" id="dataTable" width="100%"
+                      <table id="tablePenjualan" class="table table-bordered dataTable" id="dataTable" width="100%"
                       cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                         <thead>
                           <tr role="row">
@@ -163,7 +163,7 @@
             theme: 'bootstrap4',
             placeholder: "Please Select",
         });
-        let items = @json($pembelians); // Array untuk menyimpan item
+        let items = @json($penjualans); // Array untuk menyimpan item
         // console.log(items);
         
         $('#jumlah').on('keyup', function() {
@@ -198,7 +198,7 @@
 
         // Kirim data items melalui AJAX
         $.ajax({ 
-            url: "{{ route('pembelian.store') }}",  // URL ke route controller            type: 'POST',
+            url: "{{ route('penjualan.store') }}",  // URL ke route controller            type: 'POST',
             method: 'POST',
             data: {
                 // _token: $('meta[name="csrf-token"]').attr('content'), // CSRF token
@@ -212,7 +212,7 @@
                 // items = []; // Kosongkan array setelah berhasil disimpan
                 // updateTable(); // Perbarui tabel setelah dikosongkan
 
-                window.location.href = "{{ route('pembelian.index') }}"; // Use Laravel's route helper
+                window.location.href = "{{ route('penjualan.index') }}"; // Use Laravel's route helper
 
             },
             error: function(xhr, status, error) {
@@ -251,7 +251,7 @@
             });
         });
         function updateTable() {
-            const tbody = $('#tablePembelian tbody');
+            const tbody = $('#tablePenjualan tbody');
             tbody.empty(); // Mengosongkan tbody sebelum menambahkan data baru
            
 
@@ -295,7 +295,7 @@
 
             }
         }
-        $('#tablePembelian').on('click', '.deleteLink', function() {
+        $('#tablePenjualan').on('click', '.deleteLink', function() {
             var index = $(this).data('index'); // Mendapatkan index dari tombol yang diklik
             items.splice(index, 1); // Menghapus item dari array
             updateTable(); // Memperbarui tabel
@@ -318,7 +318,7 @@
 
            const url = window.location.href;
    
-           const match = url.match(/\/pembelian\/(PMB-\d{8}-\w+)\/edit/);
+           const match = url.match(/\/penjualan\/(PMB-\d{8}-\w+)\/edit/);
    
            if (match && match[1]) {
                const pmbCode = match[1];

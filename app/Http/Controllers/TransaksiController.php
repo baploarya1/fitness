@@ -170,7 +170,7 @@ class TransaksiController extends Controller
         $id = $request->id;
         $user = Auth::user();
 
-        $Transaksi = Transaksi::find($id);
+        $Transaksi = Transaksi::where('id', $id)->where('type', 'a')->firstOrFail();
         $Transaksi->type = 'z';
         $Transaksi->username = $user->name;
         $Transaksi->user_id = $user->id;

@@ -140,7 +140,7 @@ class AksesorisController extends Controller
         //
         $id = $request->id;
 
-        $Aksesoris = Aksesoris::find($id);
+        $Aksesoris = Aksesoris::where('id', $id)->where('type', 'a')->firstOrFail();
         $Aksesoris->type = 'z';
         $Aksesoris->save();
         

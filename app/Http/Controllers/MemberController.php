@@ -176,7 +176,7 @@ class MemberController extends Controller
         $id = $request->id;
         $user = Auth::user();
 
-        $member = Member::find($id);
+        $member = Member::where('id', $id)->where('type', 'a')->firstOrFail();
         $member->type = 'z';
         $member->username = $user->name;
         $member->user_id = $user->id;

@@ -49,7 +49,7 @@ class PembayaranController extends Controller
         $id = $request->id;
         $user = Auth::user();
 
-        $pembayaran = Pembayaran::find($id);
+        $pembayaran = Pembayaran::where('id', $id)->where('type', 'a')->firstOrFail();
         $pembayaran->type = 'z';
         $pembayaran->username = $user->name;
         $pembayaran->user_id = $user->id;
