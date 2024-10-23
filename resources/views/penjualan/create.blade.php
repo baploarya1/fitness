@@ -54,6 +54,9 @@
                                 <input type="hidden" id="nama_barang">
                                 <input type="hidden" id="satuan">
                                 <input type="hidden" id="faktur" value="{{$faktur??'-'}}">
+                @component('components.select',['label'=>'Member',"type"=>"obj","name"=>"nomor_member" ,'key1'=>'nomor_member','key2'=>'nama_member','key3'=>'nomor_member','key4'=>'alamat','col'=>'col-lg-8 col-sm-6',"placeholder"=>"Pilih Member", "options"=>$members])  @endcomponent
+                <input type="hidden" id="nama_member">
+
                     @component('components.inputGroup',['label'=>'Jumlah ',"name"=>"jumlah","type"=>"number", "col"=>"col-md-5"]) @endcomponent
                     <div class="form-group row">
                         <div class="col-sm-2">
@@ -96,15 +99,20 @@
                       cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                         <thead>
                           <tr role="row">
-                            <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
+                            <th  class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
                             rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending"
-                            style="width: 57px;">
+                            style="width: 2%;">
                            No
                             </th>
                             <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
                             rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending"
                             style="width: 57px;">
                             Kode Aksesoris
+                            </th>
+                            <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
+                            rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending"
+                            style="width: 57px;">
+                            Nama Member
                             </th>
                             <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
                             rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending"
@@ -159,12 +167,16 @@
    
     $(document).ready(function() {
          
+        $("#nomor_member").select2({
+            theme: 'bootstrap4',
+            placeholder: "Please Select",
+        });
         $("#kode_aksesoris").select2({
             theme: 'bootstrap4',
             placeholder: "Please Select",
         });
         let items = @json($penjualans); // Array untuk menyimpan item
-        // console.log(items);
+        console.log(items);
         
         $('#jumlah').on('keyup', function() {
             const jumlah = $(this).val() 
@@ -228,6 +240,13 @@
             $('#satuan').val(satuan)
            
         });
+        $(document).on("change", "#nomor_member", function () {
+          
+            const arr = $(this).find('option:selected').text().split('|').map(s => s.trim());
+            console.log(arr);
+            
+            $('#nama_member').val(arr[1])           
+        });
         
         $(document).ready(function() {
             // $('#kode_aksesoris').val('asdsa')
@@ -236,17 +255,22 @@
             $('#myForm').on('submit', function(e) {
                 e.preventDefault(); // Mencegah pengiriman form
 
+             
                 // Mengambil nilai dari input
                 const kode_aksesoris = $('#kode_aksesoris').val();
+                const nomor_member = $('#nomor_member').val();
+                const nama_member = $('#nama_member').val();
                 const nama_barang = $('#nama_barang').val();
                 const harga = toNumber($('#harga').val()) ;
                 const jumlah = $('#jumlah').val();
                 const satuan = $('#satuan').val();
                 const sub_total = toNumber($('#sub_total').val()) ;
-                items.push({ kode_aksesoris ,nama_barang,harga,jumlah,sub_total,satuan });
+                items.push({ kode_aksesoris ,nomor_member,nama_member,nama_barang,harga,jumlah,sub_total,satuan });
 
+                // console.log(items);
+                
                 updateTable();
-                $('#kode_aksesoris').val('')
+                 
                 this.reset(); // Mereset form dengan cara ini
             });
         });
@@ -262,7 +286,7 @@
 
                 tbody.append(
                     `<tr id="emptyRow">
-                        <td colspan="7" style="text-align: center;">Data masih kosong</td>
+                        <td colspan="8" style="text-align: center;">Data masih kosong</td>
                     </tr>`
                 );
             } else {
@@ -271,6 +295,7 @@
                         `<tr class="odd">
                             <td class="sorting_1">${index +1}</td>
                             <td>${item.kode_aksesoris}</td>
+                            <td>${item.nama_member??''}</td>
                             <td>${item.nama_barang}</td>
                             <td>${formatRupiah(item.harga)}</td>
                             <td>${item.jumlah}</td>
@@ -285,6 +310,7 @@
             }
         // this.reset();
         $('#kode_aksesoris').val('').trigger('change'); // Change '2' to the desired value
+        $('#nomor_member').val('').trigger('change'); // Change '2' to the desired value
 
             if (items.length == 0) {
                 // $('#btn-simpan').css('style', 'display: none;');

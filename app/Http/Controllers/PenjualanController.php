@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\PurchaseHelper;
 use App\Models\Aksesoris;
+use App\Models\Member;
 use App\Models\Mutasi;
 use App\Models\Penjualan;
 use Illuminate\Http\Request;
@@ -36,10 +37,13 @@ class PenjualanController extends Controller
     public function create()
     {
         //
+        $members = Member::select("nomor_member","nama_member","alamat")->where('type', '!=', 'z')->get();
+
         $aksesoris = Aksesoris::select("kode_aksesoris","nama_aksesoris","satuan")->where('type', '!=', 'z')->get();
 
         return view('penjualan.create',[
             "aksesoris"=>$aksesoris,
+            "members"=>$members,
             "penjualans"=>[],
         ]);
 
@@ -60,20 +64,23 @@ class PenjualanController extends Controller
             $data = $request->input('items');
             $faktur = $request->input('param');
             
-            
+            // return $request;
             $kodePenjualan = PurchaseHelper::generatePurchaseCode("PNJ");
+            // return $faktur == '-'?$kodePenjualan: $faktur;
              // Simpan data member ke database
             $user = Auth::user();
             // jika update
-            
             if ($faktur !== '-') {
                 Penjualan::where('faktur', $faktur)->update(['type' => 'z','username' => $user->name,'user_id' => $user->id]);
                 Mutasi::where('nomor_transaksi', $faktur)->update(['type' => 'z','username' => $user->name,'user_id' => $user->id]);
             }
+            
             foreach ($data as $key => $value) { 
                 Penjualan::create([
                     'faktur' => $faktur == '-'?$kodePenjualan: $faktur,
                     'kode_barang' => $value['kode_aksesoris'],
+                    'nomor_member' => $value['nomor_member'],
+                    'nama_member' => $value['nama_member'],
                     'nama_barang' => $value['nama_barang'],
                     'satuan' => $value['satuan'],
                     'harga' => $value['harga'],
@@ -84,6 +91,7 @@ class PenjualanController extends Controller
                     'username' =>  $user->name,
                     'user_id' => $user->id,
                 ]);
+                
                 Mutasi::create([
                     'nomor_transaksi' =>  $faktur == '-'?$kodePenjualan: $faktur ,
                     'kode_aksesoris' => $value['kode_aksesoris'],
@@ -133,13 +141,15 @@ class PenjualanController extends Controller
     public function edit($faktur)
     {
         //
+        $members = Member::select("nomor_member","nama_member","alamat")->where('type', '!=', 'z')->get();
         $aksesoris = Aksesoris::select("kode_aksesoris","nama_aksesoris","satuan")->where('type', '!=', 'z')->get();
-        $penjualans = Penjualan::select('kode_barang as kode_aksesoris','nama_barang','tanggal_penjualan','faktur','harga','sub_total','satuan','qty_satuan_kecil AS jumlah')->where('faktur', $faktur)->where('type', '!=', 'z')->get();
+        $penjualans = Penjualan::select('kode_barang as kode_aksesoris','nama_barang','nomor_member','nama_member','tanggal_penjualan','faktur','harga','sub_total','satuan','qty_satuan_kecil AS jumlah')->where('faktur', $faktur)->where('type', '!=', 'z')->get();
         // dd($penjualans);
 
         return view('penjualan.create',[
             "aksesoris"=>$aksesoris,
             "penjualans"=>$penjualans,
+            "members"=>$members,
             "faktur"=>$faktur
         ]);
 

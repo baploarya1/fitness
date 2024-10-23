@@ -50,7 +50,7 @@ class TransaksiController extends Controller
     public function create()
     {
         //
-        $members = Member::select("nomor_member","nama_member")->where('type', '!=', 'z')->get();
+        $members = Member::select("nomor_member","nama_member","alamat")->where('type', '!=', 'z')->get();
         $kategoris = Kategori::select("kode_kategori","nama_kategori")->where('type', '!=', 'z')->get();
         $pakets = Paket::select("kode_paket","nama_paket")->where('type', '!=', 'z')->get();
         $pembayarans = Pembayaran::select("kode_pembayaran","nama_pembayaran")->where('type', '!=', 'z')->get();
@@ -202,7 +202,7 @@ class TransaksiController extends Controller
         $transaksi = Transaksi::find($id);
 
         // dd($transaksi);
-        $members = Member::select("nomor_member","nama_member")->where('type', '!=', 'z')->get();
+        $members = Member::select("nomor_member","nama_member","alamat")->where('type', '!=', 'z')->get();
         $pakets = Paket::select("kode_paket","nama_paket")->where('type', '!=', 'z')->get();
         $pembayarans = Pembayaran::select("kode_pembayaran","nama_pembayaran")->where('type', '!=', 'z')->get();
         // dd($member);

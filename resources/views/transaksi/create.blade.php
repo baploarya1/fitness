@@ -49,7 +49,7 @@
              <form class='mt-2' id="myform" enctype="multipart/form-data" action="{{ route('transaksi.store') }}" id="myForm" method="POST">
              {{-- <form class='mt-2' id="myform" enctype="multipart/form-data" action="{{ route('transaksi.store') }}" id="myForm" method="POST"> --}}
                 @csrf                           
-                    @component('components.select',['label'=>'Member',"type"=>"obj","name"=>"nomor_member" ,'key1'=>'nomor_member','key2'=>'nama_member','col'=>'col-lg-8 col-sm-6',"placeholder"=>"Pilih Member", "options"=>$members]) <div class="col-lg-3">
+                    @component('components.select',['label'=>'Member',"type"=>"obj","name"=>"nomor_member" ,'key1'=>'nomor_member','key2'=>'nama_member','col'=>'col-lg-8 col-sm-6','key3'=>'nomor_member','key4'=>'alamat',"placeholder"=>"Pilih Member", "options"=>$members]) <div class="col-lg-3">
                         <a href="{{ route('member.create') }}"class="btn  btn-login w-75 btn-success">Tambah Member</a>
                       </div> @endcomponent
                     @component('components.inputGroup',['label'=>'Nomor Transaksi ',"name"=>"nomor_transaksi","col"=>"col-md-5"]) @endcomponent
@@ -102,21 +102,21 @@
             // console.log(kode_kategori);
             $.ajax({
                 url: '{{ route("ajax.load.paket") }}',  // URL ke route controller            type: 'POST',
-            data: {
-                kode_kategori,
-                _token: '{{ csrf_token() }}'  // Token CSRF untuk keamanan
-            },
-            type: 'POST',
-            success: function(response) {
-                // Proses jika request sukses
-                $("#kode_paket").html(response)
-                // console.log('Data berhasil dikirim:', response);
-            },
-            error: function(xhr, status, error) {
-                // Proses jika terjadi error
-                console.error('Error:', error);
-            }
-        });
+                data: {
+                    kode_kategori,
+                    _token: '{{ csrf_token() }}'  // Token CSRF untuk keamanan
+                },
+                type: 'POST',
+                success: function(response) {
+                    // Proses jika request sukses
+                    $("#kode_paket").html(response)
+                    // console.log('Data berhasil dikirim:', response);
+                },
+                error: function(xhr, status, error) {
+                    // Proses jika terjadi error
+                    console.error('Error:', error);
+                }
+            });
         });
        
         $("#nomor_member").select2({
