@@ -3,6 +3,6 @@
             <label for="{{$label}}" class="  col-form-label">{{$label}}</label>
       </div>
        <div class="{{$col}}">
-             <input type="date" class="form-control  " name="{{$name}}" placeholder="{{$placeholder}}" value="{{$value}}">
+             <input type="date" class="form-control  " name="{{$name}}" placeholder="{{$placeholder??''}}" value="{{$value}}">
        </div>
 </div>

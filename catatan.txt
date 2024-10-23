@@ -21,3 +21,27 @@ no_ktp
 kode_member
 nama
 alamat
+
+
+
+edit setelah pilih item di pembelian dan penjualan
+redaksi di tombol tambah item
+tanggal input di pembelian dan penjualan
+di penjualan tambah piih member
+di pembelian tambah pilih supplier
+
+tabel supplier
+
+kode_supplier
+nama_supplier
+alamat
+no_hp
+nama_kontak
+
+
+laporan application form
+pilih tanggal_mulai sd tanggal_akhir
+kode_member
+nama_member
+kategori
+paket

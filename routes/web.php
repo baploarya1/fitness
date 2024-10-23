@@ -50,6 +50,8 @@ Route::middleware('auth')->group(
         Route::post('/hapus-aksesoris', [AksesorisController::class,'hapusAksesoris']);
         Route::post('/hapus-pembelian', [PembelianController::class,'hapusPembelian']);
         Route::post('/hapus-penjualan', [PenjualanController::class,'hapusPenjualan']);
+        Route::post('/cetak-mutasi', [LaporanController::class,'cetakMutasi']);
+        Route::get('/laporan-mutasi', [LaporanController::class,'indexMutasi']);
         // Route::post('/transaksi', [TransaksiController::class,'store']);
         Route::resource('user', UserController::class);
         Route::post('/hapus-user', [UserController::class,'hapusUser']);

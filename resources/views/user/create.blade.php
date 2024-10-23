@@ -54,8 +54,8 @@
                 @component('components.select',['label'=>'Role','name'=>'role','key1'=>'text','key2'=>'text',"type"=>"arr","name"=>"role" ,"placeholder"=>"Role ",'col'=>'col-lg-5 col-sm-6', "options"=> [ ['text' => 'Admin' ],['text' => 'Operator' ]]]) 
             
                 @endcomponent
-                @component('components.inputGroup',['label'=>'Password','name'=>'password',"col"=>"col-md-5"]) @endcomponent
-                @component('components.inputGroup',['label'=>'Ulangi Password','name'=>'password_confirmation',"col"=>"col-md-5"]) @endcomponent
+                @component('components.inputGroup',['label'=>'Password','name'=>'password','type'=>'password',"col"=>"col-md-5"]) @endcomponent
+                @component('components.inputGroup',['label'=>'Ulangi Password','type'=>'password','name'=>'password_confirmation',"col"=>"col-md-5"]) @endcomponent
 
                     <hr>
                     <div class="row d-flex">
@@ -82,59 +82,11 @@
 
     $(document).ready(function() {
         // console.log('okai')
-        $('#amount').on('keyup', function() {
-            let value = $(this).val().replace(/[^0-9]/g, '');
-            value = parseInt(value).toLocaleString();
-            $(this).val(value);
+        $('#username').on('keyup', function() {
+            $(this).val($(this).val().toUpperCase());
         });
 
-        // console.log($("#pilihexport").val);
-        $('#pilihexport').change(function() {
-            const selectedValue = $(this).val(); // Mendapatkan nilai yang dipilih
-            if (selectedValue == '') {
-                $('#printbutton').removeClass('d-block');
-                $('#printbutton').addClass('d-none')
-            }
-            if (selectedValue == 'excel') {
-                $('#myForm').attr('action', '/cetak-pembelian-excel'); // Change form action
-                $('#printbutton').html('<i class="fas fa-print"></i>&nbsp;Print Excel')
-                $('#printbutton').removeClass('d-none');
-                $('#printbutton').addClass('d-block')
-            }
-            if (selectedValue == 'pdf') {
-                $('#myForm').attr('action', '/cetak-pembelian'); // Change form action
-                $('#printbutton').html('<i class="fas fa-print"></i>&nbsp;Print Pdf')
-                $('#printbutton').removeClass('d-none');
-                $('#printbutton').addClass('d-block')
-            }
-             
-            // $('#result').text('Kamu memilih: ' + selectedValue); // Menampilkan hasil
-        })
-        
-        $("#gudangstok").select2({
-            theme: 'bootstrap4',
-            placeholder: "Please Select",
-        });
-        $("#kodesupplier").select2({
-            theme: 'bootstrap4',
-            placeholder: "Please Select",
-        });
-        $("#grup1").select2({
-            theme: 'bootstrap4',
-            placeholder: "Please Select",
-        });
-        $("#grup2").select2({
-            theme: 'bootstrap4',
-            placeholder: "Please Select",
-        });
-        $("#kodebarang").select2({
-            theme: 'bootstrap4',
-            placeholder: "Please Select",
-        });
-        $("#kodesupplier").select2({
-            theme: 'bootstrap4',
-            placeholder: "Please Select",
-        });
+         
         $("#namabarang").select2({
             theme: 'bootstrap4',
             placeholder: "Please Select",

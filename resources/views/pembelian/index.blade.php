@@ -83,8 +83,12 @@
                 <div class="row justify-content-between">
                   <div class="col-sm-12 col-md-5 mb-3">
                     <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
-                      Showing 1 to 10 of 57 entries
+                      Showing {{ $pembelians->firstItem() }}  to {{ $pembelians->lastItem() }}  of  {{ $pembelians->total() }}  entries
                     </div>
+                  </div>
+                  <div class="col-sm-12 col-md-5 d-flex justify-content-end mb-3">
+                    {{ $pembelians->links() }}
+
                   </div>
                    
                 </div>

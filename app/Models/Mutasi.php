@@ -10,17 +10,11 @@ class Mutasi extends Model
     use HasFactory;
     protected $table = 'mutasi';
 
-    protected $fillable = [
-        'kode_aksesoris',
-        'nomor_transaksi',
-        'keterangan',
-        'harga',
-        'satuan',
-        'jenis',
-        'qty_satuan_kecil',
-        'tanggal_transaksi',
-        'type',
-        'username',
-        'user_id',
+    protected $fillable = ['kode_aksesoris','nomor_transaksi','keterangan','harga','satuan','jenis','qty_satuan_kecil','tanggal_transaksi','type','username','user_id',
     ];
+
+    public function barang()
+    {
+        return $this->belongsTo(Aksesoris::class, 'kode_aksesoris', 'kode_aksesoris');  
+    }
 }

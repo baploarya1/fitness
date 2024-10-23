@@ -71,15 +71,16 @@
                             @endforeach
 
                           </td>
-                          <td class="d-flex">
+                          <td  >
+                            @if($user->name !=='ADMIN')
                               <a href="{{ route('user.edit', $user->id) }}" data-bs-toggle="tooltip" title="Edit" class="p-2"><i class="fa fa-edit text-primary "></i>
                                 </a>
                                 <a href="#"  data-id="{{ $user->id }}" data-nama="{{ $user->nama }}" data-toggle="modal" data-target="#deleteModal" title="Hapus"
                                     class="p-2 tombolHapus"><i class="fa fa-trash text-danger"></i>
                                 </a>
+                            @endif
                           </td>
-                          {{-- class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteModal" --}}
-                        </tr>
+                         </tr>
                          
                         @endforeach
                       </tbody>
@@ -92,52 +93,7 @@
                       Showing 1 to 10 of 57 entries
                     </div>
                   </div>
-                  {{-- <div class="col-sm-12 col-md-7 d-flex justify-content-end">
-                    <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-                      <ul class="pagination">
-                        <li class="paginate_button page-item previous disabled" id="dataTable_previous">
-                          <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">
-                            Previous
-                          </a>
-                        </li>
-                        <li class="paginate_button page-item active">
-                          <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">
-                            1
-                          </a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                          <a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">
-                            2
-                          </a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                          <a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">
-                            3
-                          </a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                          <a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">
-                            4
-                          </a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                          <a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">
-                            5
-                          </a>
-                        </li>
-                        <li class="paginate_button page-item ">
-                          <a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">
-                            6
-                          </a>
-                        </li>
-                        <li class="paginate_button page-item next" id="dataTable_next">
-                          <a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">
-                            Next
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div> --}}
+                   
                 </div>
               </div>
             </div>

@@ -90,10 +90,12 @@
                 <div class="row justify-content-between">
                   <div class="col-sm-12 col-md-5 mb-3">
                     <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
-                      Showing 1 to 10 of 57 entries
+                      Showing {{ $aksesories->firstItem() }}  to {{ $aksesories->lastItem() }}  of  {{ $aksesories->total() }}  entries
                     </div>
                   </div>
-                   
+                  <div class="col-sm-12 col-md-5 d-flex justify-content-end mb-3">
+                    {{ $aksesories->links() }}
+                  </div>
                 </div>
               </div>
             </div>

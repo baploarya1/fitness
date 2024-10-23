@@ -77,7 +77,7 @@
                     <div class="row d-flex">
                         <div class="col-md-6 d-flex">
                             
-                            <button  class="btn btn-success w-50"  type="submit">Tambah</button>
+                            <button  class="btn btn-success w-50"  type="submit">Tambah Item</button>
                         </div>
                     </div>
                                                          

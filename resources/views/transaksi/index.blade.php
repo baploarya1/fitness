@@ -100,21 +100,9 @@
                     
                   </div>
                    <div class="col-sm-12 col-md-5 d-flex justify-content-end mb-3">
-                    {{-- {{$transaksis->link()}} --}}
-                    {{ $transaksis->links() }}
+                     {{ $transaksis->links() }}
 
-                    {{-- <nav aria-label="...">
-                      <ul class="pagination">
-                        <li class="page-item disabled">
-                          <a class="page-link">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        
-                        <li class="page-item">
-                          <a class="page-link" href="#">Next</a>
-                        </li>
-                      </ul>
-                    </nav> --}}
+                   
                    </div>
                 </div>
               </div>

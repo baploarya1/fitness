@@ -1,6 +1,11 @@
+@php
+use Illuminate\Support\Facades\Auth;
+
+$user = Auth::user();
+// dd($user->hasRole('Admin'));
+@endphp
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -27,6 +32,7 @@
         <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
     <!-- Custom styles for this template-->
+    
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
      
 </head>
@@ -78,6 +84,8 @@
             </li>
 
             <!-- Divider -->
+            @if($user->hasRole('Admin'))
+
             <hr class="sidebar-divider">
 
             <!-- Heading -->
@@ -106,6 +114,10 @@
                     <i class="fas fa-box-open"></i>
                     <span>Paket</span></a>
             </li>
+            @endif
+
+            @if($user->hasRole('Admin') || $user->hasRole('Operator'))
+
             <hr class="sidebar-divider">
 
             <!-- Heading -->
@@ -128,27 +140,48 @@
                     <i class="fas fa-store"></i>
                     <span>Penjualan</span></a>
             </li>
-            <hr class="sidebar-divider">
+            @endif
+            @if($user->hasRole('Admin'))
+                <hr class="sidebar-divider">
 
-            <div class="sidebar-heading">
-                Users
-            </div>
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/" data-toggle="collapse" data-target="#collapsePagesUser"
-                    aria-expanded="true" aria-controls="collapsePagesUser">
-                    <i class="fas fa-users"></i>
-                    <span>Users</span></a>
-                </a>
-                <div id="collapsePagesUser" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                         <a class="collapse-item" href="/user">User</a>
-                        {{-- <a class="collapse-item" href="/role">Role</a> --}}
-                        
-                    </div>
+                <div class="sidebar-heading">
+                    Laporan
                 </div>
-            </li>
-            
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/laporan-mutasi">
+                        <i class="far fa-file-alt"></i>
+                        <span>Cetak Mutasi</span></a>
+                </li>
+            @endif
+            @if($user->hasRole('Admin'))
+                <hr class="sidebar-divider">
+
+                <div class="sidebar-heading">
+                    Users
+                </div>
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/user">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span></a>
+                </li>
+            @endif
+
+                {{-- <li class="nav-item">
+                    <a class="nav-link collapsed" href="/" data-toggle="collapse" data-target="#collapsePagesUser"
+                        aria-expanded="true" aria-controls="collapsePagesUser">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span></a>
+                    </a>
+                    <div id="collapsePagesUser" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="/user">User</a>
+                            <a class="collapse-item" href="/role">Role</a>
+                            
+                        </div>
+                    </div>
+                </li> --}}
            
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -219,12 +252,12 @@
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
+                            {{-- <a class="dropdown-item" href="#">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Profile
                             </a>
                             
-                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-divider"></div> --}}
                         
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

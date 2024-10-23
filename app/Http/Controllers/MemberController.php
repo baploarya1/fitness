@@ -25,7 +25,7 @@ class MemberController extends Controller
         $members = Member::filter(request()->only(['search']))
         ->where('type', '!=', 'z') // Filter berdasarkan type
         ->orderBy('created_at', 'desc') // Urutkan berdasarkan created_at
-        ->paginate(10) // Paginate the results
+        ->paginate(5) // Paginate the results
         ->appends(request()->query()); // Keep query parameters in pagination links
 
         // dd($members);
