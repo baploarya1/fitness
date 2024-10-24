@@ -105,6 +105,11 @@ $user = Auth::user();
                     <span>Aksesoris</span></a>
             </li>
             <li class="nav-item mt-0">
+                <a class="nav-link" href="/supplier">
+                    <i class="fas fa-user-tag"></i>
+                    <span>Supplier</span></a>
+            </li>
+            <li class="nav-item mt-0">
                 <a class="nav-link" href="/pembayaran">
                     <i class="fas fa-money-check"></i>
                     <span>Metode Pembayaran</span></a>
@@ -151,8 +156,13 @@ $user = Auth::user();
                 <li class="nav-item">
                     <a class="nav-link" href="/laporan-mutasi">
                         <i class="far fa-file-alt"></i>
-                        <span>Cetak Mutasi</span></a>
+                        <span>Cetak Mutasi Stok</span></a>
                 </li>
+                {{-- <li class="nav-item">
+                    <a class="nav-link" href="/laporan-application-form">
+                        <i class="fas fa-receipt"></i>
+                        <span>Laporan Member</span></a>
+                </li> --}}
             @endif
             @if($user->hasRole('Admin'))
                 <hr class="sidebar-divider">

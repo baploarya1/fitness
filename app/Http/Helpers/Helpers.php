@@ -4,7 +4,11 @@ function format_uang($angka)
 {
     return number_format($angka, 0, ',', '.');
 }
-
+function formatRupiah($angka) {
+    // Menggunakan number_format untuk format angka
+    $formattedAngka = number_format($angka, 0, ',', '.');
+    return 'Rp. ' . $formattedAngka;
+}
 function terbilang($angka)
 {
     $angka = abs($angka);

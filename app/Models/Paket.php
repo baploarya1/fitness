@@ -23,4 +23,8 @@ class Paket extends Model
 
         
     }
+    public function kategori()
+    {
+        return $this->hasOne(Kategori::class, 'kode_kategori', 'kode_kategori');
+    }
 }

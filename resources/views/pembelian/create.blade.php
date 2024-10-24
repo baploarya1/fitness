@@ -54,6 +54,9 @@
                                 <input type="hidden" id="nama_barang">
                                 <input type="hidden" id="satuan">
                                 <input type="hidden" id="faktur" value="{{$faktur??'-'}}">
+                @component('components.select',['label'=>'Supplier',"type"=>"obj","name"=>"kode_supplier" ,'key1'=>'kode_supplier','key2'=>'nama_supplier','key3'=>'kode_supplier','key4'=>'alamat','col'=>'col-lg-8 col-sm-6',"placeholder"=>"Pilih Supplier", "options"=>$suppliers])  @endcomponent
+                                <input type="hidden" id="nama_supplier">
+                
                     @component('components.inputGroup',['label'=>'Jumlah ',"name"=>"jumlah","type"=>"number", "col"=>"col-md-5"]) @endcomponent
                     <div class="form-group row">
                         <div class="col-sm-2">
@@ -89,7 +92,12 @@
         <div class="card-body">
             <div class="table-responsive">
                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                   
+                    @php  $current = now()->format('Y-m-d');  @endphp
+                    <div class="row">
+                        <div class="col-md-5 mb-3 pl-0">
+                            @component('components.inputDate',['label'=>'Tanggal Pembelian',"name"=>"tanggal_pembelian" ,"placeholder"=>"First name", "value"=>$current]) @endcomponent
+                        </div>
+                    </div>
                   <div class="row">
                     <div class="col-sm-12">
                       <table id="tablePembelian" class="table table-bordered dataTable" id="dataTable" width="100%"
@@ -98,13 +106,18 @@
                           <tr role="row">
                             <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
                             rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending"
-                            style="width: 57px;">
+                            style="width: 1%;">
                            No
                             </th>
                             <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
                             rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending"
                             style="width: 57px;">
                             Kode Aksesoris
+                            </th>
+                            <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
+                            rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending"
+                            style="width: 57px;">
+                            Nama Supplier
                             </th>
                             <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable"
                             rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending"
@@ -161,7 +174,11 @@
          
         $("#kode_aksesoris").select2({
             theme: 'bootstrap4',
-            placeholder: "Please Select",
+            placeholder: "-- Pilih Aksesoris --",
+        });
+        $("#kode_supplier").select2({
+            theme: 'bootstrap4',
+            placeholder: "-- Pilih Supplier --",
         });
         let items = @json($pembelians); // Array untuk menyimpan item
         // console.log(items);
@@ -195,6 +212,7 @@
             alert('Tidak ada item yang ditambahkan.');
             return;
         }
+        const tanggal_pembelian = $('input[name="tanggal_pembelian"]').val();
 
         // Kirim data items melalui AJAX
         $.ajax({ 
@@ -204,6 +222,7 @@
                 // _token: $('meta[name="csrf-token"]').attr('content'), // CSRF token
                 items: items ,// Kirim array items
                 param: $('#faktur').val() , 
+                tanggal_pembelian,
                 _token: '{{ csrf_token() }}'  // Token CSRF untuk keamanan
             },
             success: function(response) {
@@ -228,7 +247,14 @@
             $('#satuan').val(satuan)
            
         });
-        
+        $(document).on("change", "#kode_supplier", function () {
+          
+          const arr = $(this).find('option:selected').text().split('|').map(s => s.trim());
+          console.log(arr);
+          
+          $('#nama_supplier').val(arr[1])           
+      });
+      
         $(document).ready(function() {
             // $('#kode_aksesoris').val('asdsa')
 
@@ -239,11 +265,13 @@
                 // Mengambil nilai dari input
                 const kode_aksesoris = $('#kode_aksesoris').val();
                 const nama_barang = $('#nama_barang').val();
+                const kode_supplier = $('#kode_supplier').val();
+                const nama_supplier = $('#nama_supplier').val();
                 const harga = toNumber($('#harga').val()) ;
                 const jumlah = $('#jumlah').val();
                 const satuan = $('#satuan').val();
                 const sub_total = toNumber($('#sub_total').val()) ;
-                items.push({ kode_aksesoris ,nama_barang,harga,jumlah,sub_total,satuan });
+                items.push({ kode_aksesoris ,nama_supplier,kode_supplier,nama_barang,harga,jumlah,sub_total,satuan });
 
                 updateTable();
                 $('#kode_aksesoris').val('')
@@ -262,7 +290,7 @@
 
                 tbody.append(
                     `<tr id="emptyRow">
-                        <td colspan="7" style="text-align: center;">Data masih kosong</td>
+                        <td colspan="8" style="text-align: center;">Data masih kosong</td>
                     </tr>`
                 );
             } else {
@@ -271,6 +299,7 @@
                         `<tr class="odd">
                             <td class="sorting_1">${index +1}</td>
                             <td>${item.kode_aksesoris}</td>
+                            <td>${item.nama_supplier}</td>
                             <td>${item.nama_barang}</td>
                             <td>${formatRupiah(item.harga)}</td>
                             <td>${item.jumlah}</td>
@@ -285,6 +314,7 @@
             }
         // this.reset();
         $('#kode_aksesoris').val('').trigger('change'); // Change '2' to the desired value
+        $('#kode_supplier').val('').trigger('change'); // Change '2' to the desired value
 
             if (items.length == 0) {
                 // $('#btn-simpan').css('style', 'display: none;');

@@ -9,6 +9,7 @@ use App\Http\Controllers\PaketController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use App\Models\Pembelian;
@@ -40,6 +41,7 @@ Route::middleware('auth')->group(
         Route::resource('/pembelian', PembelianController::class);
         Route::resource('/penjualan', PenjualanController::class);
         Route::resource('/aksesoris', AksesorisController::class);
+        Route::resource('/supplier', SupplierController::class);
         Route::get('/members', [MemberController::class, 'index']);
         Route::get('/pakets', [PaketController::class, 'index']);
         Route::get('/cetak-pembayaran/{id}', [TransaksiController::class, 'cetakPembayaran']);
@@ -50,9 +52,11 @@ Route::middleware('auth')->group(
         Route::post('/hapus-aksesoris', [AksesorisController::class,'hapusAksesoris']);
         Route::post('/hapus-pembelian', [PembelianController::class,'hapusPembelian']);
         Route::post('/hapus-penjualan', [PenjualanController::class,'hapusPenjualan']);
+        Route::post('/hapus-supplier', [SupplierController::class,'hapusSupplier']);
         Route::post('/cetak-mutasi', [LaporanController::class,'cetakMutasi']);
         Route::get('/laporan-mutasi', [LaporanController::class,'indexMutasi']);
-        // Route::post('/transaksi', [TransaksiController::class,'store']);
+        Route::get('/laporan-application-form', [LaporanController::class,'indexApplicationForm']);
+        Route::post('/cetak-application-form', [LaporanController::class,'cetakApplicationForm']);
         Route::resource('user', UserController::class);
         Route::post('/hapus-user', [UserController::class,'hapusUser']);
 

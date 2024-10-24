@@ -123,6 +123,10 @@
             theme: 'bootstrap4',
             placeholder: "Please Select",
         });
+        $("#kode_kategori").select2({
+            theme: 'bootstrap4',
+            placeholder: "Please Select",
+        });
         $("#kode_paket").select2({
             theme: 'bootstrap4',
             placeholder: "Please Select",

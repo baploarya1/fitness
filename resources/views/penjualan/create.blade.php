@@ -88,11 +88,16 @@
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-body">
+    <div class="card mt-5">
+        <div class="card-body ">
             <div class="table-responsive">
                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                   
+                    @php  $current = now()->format('Y-m-d');  @endphp
+                    <div class="row">
+                        <div class="col-md-5 mb-3 pl-0">
+                            @component('components.inputDate',['label'=>'Tanggal Penjualan',"name"=>"tanggal_penjualan" ,"placeholder"=>"First name", "value"=>$current]) @endcomponent
+                        </div>
+                    </div>
                   <div class="row">
                     <div class="col-sm-12">
                       <table id="tablePenjualan" class="table table-bordered dataTable" id="dataTable" width="100%"
@@ -207,6 +212,9 @@
             alert('Tidak ada item yang ditambahkan.');
             return;
         }
+        const tanggal_penjualan = $('input[name="tanggal_penjualan"]').val();
+
+        // console.log(tanggal_penjualan);
 
         // Kirim data items melalui AJAX
         $.ajax({ 
@@ -216,6 +224,7 @@
                 // _token: $('meta[name="csrf-token"]').attr('content'), // CSRF token
                 items: items ,// Kirim array items
                 param: $('#faktur').val() , 
+                tanggal_penjualan,
                 _token: '{{ csrf_token() }}'  // Token CSRF untuk keamanan
             },
             success: function(response) {

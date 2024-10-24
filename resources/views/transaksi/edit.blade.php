@@ -57,10 +57,13 @@
                     @component('components.inputGroup',['label'=>'Nomor Transaksi ',"value"=>$transaksi->nomor_transaksi,"name"=>"nomor_transaksi","col"=>"col-md-5"]) @endcomponent
                     @component('components.inputTanggal',['label'=>'Tanggal Transaksi',"name"=>"tanggal_transaksi" ,"value"=>$transaksi->tanggal_transaksi??$current,"placeholder"=>"Last name", "col"=>"col-md-5",
                    ]) @endcomponent
+                    <div class="mt-3"></div>
+
                      @component('components.inputTanggal',['label'=>'Tanggal Mulai Berlaku',"name"=>"tanggal_mulai_berlaku" ,"value"=>$transaksi->tanggal_mulai_berlaku??$current,"placeholder"=>"Last name", "col"=>"col-md-5",
                    ]) @endcomponent
                      {{-- @component('components.inputTanggal',['label'=>'Tanggal Habis Berlaku',"name"=>"tanggal_habis_berlaku" ,"value"=>$transaksi->tanggal_habis_berlaku??$current,"placeholder"=>"Last name", "col"=>"col-md-5",
                    ]) @endcomponent --}}
+                    @component('components.select',['label'=>'Kategori',"value"=>$transaksi->kode_kategori,"type"=>"obj","name"=>"kode_kategori" ,'key1'=>'kode_kategori','key2'=>'nama_kategori','col'=>'col-lg-8 col-sm-6',"placeholder"=>"Pilih Paket", "options"=>$kategori])@endcomponent
                     @component('components.select',['label'=>'Paket',"value"=>$transaksi->kode_paket,"type"=>"obj","name"=>"kode_paket" ,'key1'=>'kode_paket','key2'=>'nama_paket','col'=>'col-lg-8 col-sm-6',"placeholder"=>"Pilih Paket", "options"=>$pakets])
                    
                     @endcomponent
@@ -97,11 +100,37 @@
         console.log('okai')
         // console.log($("#pilihexport").val);
         
+        $(document).on("change", "#kode_kategori", function () {
+             let kode_kategori = $(this).val();
+            // console.log(kode_kategori);
+            $.ajax({
+                url: '{{ route("ajax.load.paket") }}',  // URL ke route controller            type: 'POST',
+                data: {
+                    kode_kategori,
+                    _token: '{{ csrf_token() }}'  // Token CSRF untuk keamanan
+                },
+                type: 'POST',
+                success: function(response) {
+                    // Proses jika request sukses
+                    $("#kode_paket").html(response)
+                    // console.log('Data berhasil dikirim:', response);
+                },
+                error: function(xhr, status, error) {
+                    // Proses jika terjadi error
+                    console.error('Error:', error);
+                }
+            });
+        });
        
         $("#nomor_member").select2({
             theme: 'bootstrap4',
             placeholder: "Please Select",
         });
+        $("#kode_kategori").select2({
+            theme: 'bootstrap4',
+            placeholder: "Please Select",
+        });
+       
         $("#kode_paket").select2({
             theme: 'bootstrap4',
             placeholder: "Please Select",

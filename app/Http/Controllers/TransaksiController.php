@@ -103,8 +103,7 @@ class TransaksiController extends Controller
     {
         //
         // try{
-            
-            $request->validate([
+             $request->validate([
                 'nomor_member' => 'required|string|max:255',
                 'nomor_transaksi' => 'required|string|max:255',
                 'kode_pembayaran' => 'nullable|string|max:255',
@@ -113,6 +112,7 @@ class TransaksiController extends Controller
                 // 'tanggal_habis_berlaku' => 'nullable|date',
                 'kode_paket' => 'required|string|max:255',
                 'keterangan' => 'nullable|string',
+                'kode_kategori' => 'nullable|string',
                 'status' => 'nullable|string|max:255'             
                 
             ]);
@@ -137,6 +137,7 @@ class TransaksiController extends Controller
                 'nomor_member' => $request->nomor_member,
                 'nomor_transaksi' => $request->nomor_transaksi,
                 'kode_pembayaran' => $request->kode_pembayaran,
+                'kode_kategori' => $request->kode_kategori,
                 'tanggal_transaksi' => $request->tanggal_transaksi,
                 'tanggal_mulai_berlaku' => $request->tanggal_mulai_berlaku,
                 'tanggal_habis_berlaku' => $tanggalPlusBulan,
@@ -202,11 +203,12 @@ class TransaksiController extends Controller
         $transaksi = Transaksi::find($id);
 
         // dd($transaksi);
+        $kategori = Kategori::select("kode_kategori","nama_kategori")->where('type', '!=', 'z')->get();
         $members = Member::select("nomor_member","nama_member","alamat")->where('type', '!=', 'z')->get();
         $pakets = Paket::select("kode_paket","nama_paket")->where('type', '!=', 'z')->get();
         $pembayarans = Pembayaran::select("kode_pembayaran","nama_pembayaran")->where('type', '!=', 'z')->get();
         // dd($member);
-        return view('transaksi.edit',compact('members','pakets','pembayarans','transaksi'));
+        return view('transaksi.edit',compact('members','pakets','pembayarans','transaksi','kategori'));
 
     }
 

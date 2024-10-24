@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\PurchaseHelper; // Tambahkan ini
 use App\Models\Mutasi;
+use App\Models\Supplier;
 
 class PembelianController extends Controller
 {
@@ -37,12 +38,14 @@ class PembelianController extends Controller
     public function store(Request $request)
     {
        
+        // return $request;
         // return $request->input('param');
         try {
     
             $data = $request->input('items');
             $faktur = $request->input('param');
-            
+            $tanggal_pembelian = $request->input('tanggal_pembelian');
+
             
             // return $data[0]['harga'];
             $kodePembelian = PurchaseHelper::generatePurchaseCode("PMB");
@@ -59,10 +62,12 @@ class PembelianController extends Controller
                     'faktur' => $faktur == '-'?$kodePembelian: $faktur,
                     'kode_barang' => $value['kode_aksesoris'],
                     'nama_barang' => $value['nama_barang'],
+                    'kode_supplier' => $value['kode_supplier'],
+                    'nama_supplier' => $value['nama_supplier'],
                     'satuan' => $value['satuan'],
                     'harga' => $value['harga'],
                     'sub_total' => $value['sub_total'],
-                    'tanggal_pembelian' => date("Y-m-d"),
+                    'tanggal_pembelian' => $tanggal_pembelian,
                     'qty_satuan_kecil' => $value['jumlah'],
                     'type' =>  "a",
                     'username' =>  $user->name,
@@ -75,7 +80,7 @@ class PembelianController extends Controller
                     'jenis' => 'MASUK',
                     'satuan' => $value['satuan'],
                     'harga' => $value['harga'],
-                    'tanggal_transaksi' => date("Y-m-d"),
+                    'tanggal_transaksi' => $tanggal_pembelian,
                     'qty_satuan_kecil' => $value['jumlah'],
                     'type' =>  "a",
                     'username' =>  $user->name,
@@ -113,10 +118,13 @@ class PembelianController extends Controller
     public function create()
     {
         //
+        $suppliers = Supplier::select("kode_supplier","nama_supplier","alamat")->where('type', '!=', 'z')->get();
+
         $aksesoris = Aksesoris::select("kode_aksesoris","nama_aksesoris","satuan")->where('type', '!=', 'z')->get();
 
         return view('pembelian.create',[
             "aksesoris"=>$aksesoris,
+            "suppliers"=>$suppliers,
             "pembelians"=>[],
         ]);
 
@@ -124,12 +132,15 @@ class PembelianController extends Controller
     public function edit($faktur)
     {
         //
+        $suppliers = Supplier::select("kode_supplier","nama_supplier","alamat")->where('type', '!=', 'z')->get();
+
+        // dd($suppliers);
         $aksesoris = Aksesoris::select("kode_aksesoris","nama_aksesoris","satuan")->where('type', '!=', 'z')->get();
-        $pembelians = Pembelian::select('kode_barang as kode_aksesoris','nama_barang','tanggal_pembelian','faktur','harga','sub_total','satuan','qty_satuan_kecil AS jumlah')->where('faktur', $faktur)->where('type', '!=', 'z')->get();
-        // dd($pembelians);
+        $pembelians = Pembelian::select('kode_barang as kode_aksesoris','kode_supplier','nama_supplier','nama_barang','tanggal_pembelian','faktur','harga','sub_total','satuan','qty_satuan_kecil AS jumlah')->where('faktur', $faktur)->where('type', '!=', 'z')->get();
 
         return view('pembelian.create',[
             "aksesoris"=>$aksesoris,
+            "suppliers"=>$suppliers,
             "pembelians"=>$pembelians,
             "faktur"=>$faktur
         ]);

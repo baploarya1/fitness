@@ -63,6 +63,7 @@ class PenjualanController extends Controller
     
             $data = $request->input('items');
             $faktur = $request->input('param');
+            $tanggal_penjualan = $request->input('tanggal_penjualan');
             
             // return $request;
             $kodePenjualan = PurchaseHelper::generatePurchaseCode("PNJ");
@@ -85,7 +86,7 @@ class PenjualanController extends Controller
                     'satuan' => $value['satuan'],
                     'harga' => $value['harga'],
                     'sub_total' => $value['sub_total'],
-                    'tanggal_penjualan' => date("Y-m-d"),
+                    'tanggal_penjualan' => $tanggal_penjualan,
                     'qty_satuan_kecil' => $value['jumlah'],
                     'type' =>  "a",
                     'username' =>  $user->name,
@@ -99,7 +100,7 @@ class PenjualanController extends Controller
                     'jenis' => 'KELUAR',
                     'satuan' => $value['satuan'],
                     'harga' => $value['harga'],
-                    'tanggal_transaksi' => date("Y-m-d"),
+                    'tanggal_transaksi' => $tanggal_penjualan,
                     'qty_satuan_kecil' => $value['jumlah'],
                     'type' =>  "a",
                     'username' =>  $user->name,
