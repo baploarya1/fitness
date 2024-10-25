@@ -22,6 +22,12 @@ class LaporanController extends Controller
         return view('laporan.mutasi',compact('aksesoris'));
 
     }
+    public function indexSaldoStok(){
+         $aksesoris = Aksesoris::select("kode_aksesoris","nama_aksesoris",'satuan' )->where('type', '!=', 'z')->get();
+
+        return view('laporan.saldo_stok',compact('aksesoris'));
+
+    }
     public function indexApplicationForm(){
         $members = Member::select("nomor_member","nama_member","alamat")->where('type', '!=', 'z')->get();
         $kategoris = Kategori::select("kode_kategori","nama_kategori")->where('type', '!=', 'z')->get();
@@ -59,6 +65,49 @@ class LaporanController extends Controller
 
         // Load the view content
         $html = view('laporan.cetak_mutasi',compact('mutasiStok','tgl_awal','tgl_akhir'))->render();
+
+        // Write the HTML content to the PDF
+        $mpdf->WriteHTML($html);
+
+        // Output the PDF as a download
+        $mpdf->Output();
+    }
+    public function cetakSaldoStok(Request $request)
+    {
+          
+        // dd($request->all());
+        $tgl_awal = $request->input('tgl_awal');
+        $tgl_akhir = $request->input('tgl_akhir');
+        $kode_aksesoris = $request->input('kode_aksesoris');
+
+        $query = Mutasi::query();
+        
+        if ($kode_aksesoris) {
+            $query->where('kode_aksesoris', $request->input('kode_aksesoris')  );
+        }
+   
+        if ($tgl_awal) {
+            $query->whereDate('tanggal_transaksi', '>=', $tgl_awal);
+        }
+   
+        if ($tgl_akhir) {
+            $query->whereDate('tanggal_transaksi', '<=',   $tgl_akhir);
+        }
+ 
+        $saldoStok = $query->with('barang')->select('kode_aksesoris')
+            ->selectRaw('SUM(CASE WHEN keterangan = "PEMBELIAN"  THEN qty_satuan_kecil ELSE 0 END) as total_masuk')
+            ->selectRaw('SUM(CASE WHEN keterangan = "PENJUALAN" THEN qty_satuan_kecil ELSE 0 END) as total_keluar')
+            ->groupBy('kode_aksesoris')
+            ->where('mutasi.type', 'a')
+            ->get();
+
+            // dd($saldoStok);
+        
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->AddPage('L');
+
+        // Load the view content
+        $html = view('laporan.cetak_saldo_stok',compact('saldoStok','tgl_awal','tgl_akhir'))->render();
 
         // Write the HTML content to the PDF
         $mpdf->WriteHTML($html);

@@ -163,6 +163,11 @@ $user = Auth::user();
                         <i class="fas fa-receipt"></i>
                         <span>Laporan Member</span></a>
                 </li> --}}
+                {{-- <li class="nav-item">
+                    <a class="nav-link" href="/laporan-saldo-stok">
+                        <i class="fas fa-archive"></i>
+                        <span>Laporan Saldo Stok</span></a>
+                </li> --}}
             @endif
             @if($user->hasRole('Admin'))
                 <hr class="sidebar-divider">

@@ -54,8 +54,10 @@ Route::middleware('auth')->group(
         Route::post('/hapus-penjualan', [PenjualanController::class,'hapusPenjualan']);
         Route::post('/hapus-supplier', [SupplierController::class,'hapusSupplier']);
         Route::post('/cetak-mutasi', [LaporanController::class,'cetakMutasi']);
+        Route::post('/cetak-saldo-stok', [LaporanController::class,'cetakSaldoStok']);
         Route::get('/laporan-mutasi', [LaporanController::class,'indexMutasi']);
         Route::get('/laporan-application-form', [LaporanController::class,'indexApplicationForm']);
+        Route::get('/laporan-saldo-stok', [LaporanController::class,'indexSaldoStok']);
         Route::post('/cetak-application-form', [LaporanController::class,'cetakApplicationForm']);
         Route::resource('user', UserController::class);
         Route::post('/hapus-user', [UserController::class,'hapusUser']);

@@ -1,5 +1,5 @@
 <?php  $current = now()->format('Y-m-d');   ?>
-@extends('layouts.main',['label'=>'Laporan Mutasi'])
+@extends('layouts.main',['label'=>'Laporan Saldo Stok'])
   
 @section('content')
  
@@ -7,15 +7,14 @@
 
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Laporan Mutasi</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Laporan Saldo Stok</h1>
     </div>
     {{-- <div class="card"> --}}
         {{-- <div class="card-body"> --}}
-            <form class='mt-2'action="/cetak-mutasi" id="myForm" method="POST">
+            <form class='mt-2'action="/cetak-saldo-stok" id="myForm" method="POST">
 
                 <div class="card">
                     <div class="card-body">
-                        
                             @csrf
                             <div class="row">
                                  
@@ -30,7 +29,6 @@
                                       <div class="card">
                                         <div class="card-body">
                                             <h3>Filter</h3>
-
                                             @component('components.select',['label'=>'Berdasarkan Aksesoris',"type"=>"obj","name"=>"kode_aksesoris" ,'key1'=>'kode_aksesoris','key2'=>'nama_aksesoris','key3'=>'kode_aksesoris', 'key4'=>'satuan','col'=>'col-lg-8 col-sm-6',"placeholder"=>"Pilih Aksesoris", "options"=>$aksesoris])  @endcomponent   
                                         
                                             <div class="modal-footer d-flex">
