@@ -25,7 +25,7 @@ class Transaksi extends Model
    
     public function member()
     {
-        return $this->belongsTo(Member::class, 'nomor_member' );  
+        return $this->belongsTo(Member::class, 'nomor_member','nomor_member' );  
     }
     public function paket()
     {

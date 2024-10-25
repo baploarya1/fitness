@@ -107,12 +107,12 @@ class TransaksiController extends Controller
                 'nomor_member' => 'required|string|max:255',
                 'nomor_transaksi' => 'required|string|max:255',
                 'kode_pembayaran' => 'nullable|string|max:255',
-                'tanggal_transaksi' => 'nullable|date',
+                'tanggal_transaksi' => 'required|date',
                 'tanggal_mulai_berlaku' => 'required|date',
                 // 'tanggal_habis_berlaku' => 'nullable|date',
                 'kode_paket' => 'required|string|max:255',
                 'keterangan' => 'nullable|string',
-                'kode_kategori' => 'nullable|string',
+                'kode_kategori' => 'required|string',
                 'status' => 'nullable|string|max:255'             
                 
             ]);

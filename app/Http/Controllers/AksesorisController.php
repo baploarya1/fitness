@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PurchaseHelper;
 use App\Models\Aksesoris;
+use App\Models\Mutasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -44,6 +46,7 @@ class AksesorisController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    protected $faktur = '-';
     public function store(Request $request)
     {
         //
@@ -55,16 +58,20 @@ class AksesorisController extends Controller
                 'kode_aksesoris' => 'required|string|max:50',
                 'nama_aksesoris' => 'required|string|max:100',
                 'satuan' => 'required|string|max:100',
-                'stok_awal' => 'nullable|integer',
+                'stok_awal' => 'required|integer',
                 // 'stok_akhir' => 'nullable|integer',
                 // 'barang_masuk' => 'nullable|integer',
                 'harga' => 'required',
                  // Contoh tipe, sesuaikan dengan kebutuhan
             ]);
             if(isset($request->id)){
-                $member = Aksesoris::find($request->id);
-                $member->type = 'z';
-                $member->save();
+                $aksesoris = Aksesoris::find($request->id);
+                $this->faktur= $aksesoris->kode_aksesoris;
+                $mutasi = Mutasi::where('kode_aksesoris', $aksesoris->kode_aksesoris)->first();
+                $mutasi->type = 'z';
+                $mutasi->save();
+                $aksesoris->type = 'z';
+                $aksesoris->save();
             }
             $request->validate(['kode_aksesoris' => ['required','string','max:255',Rule::unique('aksesoris')->where(function ($query) {
                             return $query->where('type', 'a');
@@ -72,7 +79,10 @@ class AksesorisController extends Controller
             ]]);
             $user = Auth::user();
             $harga = number_format((float)str_replace(',', '', $request->harga), 2, '.', '');
-    
+            $kodemotasi = PurchaseHelper::generatePurchaseCode("STOK-AWAL");
+
+ 
+            // dd($faktur);
             // Jika validasi berhasil, simpan data ke database
             Aksesoris::create([
                 'kode_aksesoris' => $request->kode_aksesoris,
@@ -85,11 +95,24 @@ class AksesorisController extends Controller
                 'username' => $user->name,
                 'user_id' => $user->id
             ]);
-        // } catch (ValidationException $e) {
-        //     // Menangkap kesalahan validasi
-        //     $errors = $e->validator->errors();
-        //     dd($errors);exit;
-        //   }
+            Mutasi::create([
+                'nomor_transaksi' =>  $this->faktur == '-'?$kodemotasi: $this->faktur ,
+                'kode_aksesoris' => $request->kode_aksesoris,
+                'keterangan' => 'STOK AWAL',
+                'jenis' => 'MASUK',
+                'satuan' => $request->satuan,
+                'harga' => $harga,
+                'tanggal_transaksi' => date('Y-m-d'),
+                'qty_satuan_kecil' =>  $request->stok_awal,
+                'type' =>  "a",
+                'username' =>  $user->name,
+                'user_id' => $user->id,
+            ]);
+        // }catch (\Exception $e) {
+        //         // Handle the exception
+        //         dd($e->getMessage());
+        //         return response()->json(['error' => $e->getMessage()], 500);
+        //     }
           
         return redirect()->route('aksesoris.index')->with('success', 'Member berhasil ditambahkan!');
 
@@ -142,8 +165,10 @@ class AksesorisController extends Controller
 
         $Aksesoris = Aksesoris::where('id', $id)->where('type', 'a')->firstOrFail();
         $Aksesoris->type = 'z';
+        $mutasi = Mutasi::where('kode_aksesoris', $Aksesoris->kode_aksesoris)->first();
         $Aksesoris->save();
-        
+        $mutasi->type = 'z';
+        $mutasi->save();
         return redirect()->route('aksesoris.index')->with(['success' => 'Data Berhasil Dihapus!']);
 
     }

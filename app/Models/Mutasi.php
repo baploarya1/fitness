@@ -10,8 +10,8 @@ class Mutasi extends Model
     use HasFactory;
     protected $table = 'mutasi';
 
-    protected $fillable = ['kode_aksesoris','nomor_transaksi','keterangan','harga','satuan','jenis','qty_satuan_kecil','tanggal_transaksi','type','username','user_id',
-    ];
+    protected $guarded=[];
+
 
     public function barang()
     {

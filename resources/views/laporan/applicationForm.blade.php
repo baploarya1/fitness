@@ -57,27 +57,23 @@
 <script type="text/javascript">
     $(document).ready(function() {
         // console.log('okai')
-        $(document).on("change", "#kode_kategori", function () {
-            let kode_kategori = $(this).val();
-            // console.log(kode_kategori);
-            $.ajax({
-                url: '{{ route("ajax.load.paket") }}',  // URL ke route controller            type: 'POST',
-                data: {
-                    kode_kategori,
-                    _token: '{{ csrf_token() }}'  // Token CSRF untuk keamanan
-                },
-                type: 'POST',
-                success: function(response) {
-                    // Proses jika request sukses
-                    $("#kode_paket").html(response)
-                    // console.log('Data berhasil dikirim:', response);
-                },
-                error: function(xhr, status, error) {
-                    // Proses jika terjadi error
-                    console.error('Error:', error);
-                }
-            });
-        });
+        // $(document).on("change", "#kode_kategori", function () {
+        //     let kode_kategori = $(this).val();
+        //      $.ajax({
+        //         url: '{{ route("ajax.load.paket") }}',  // URL ke route controller            type: 'POST',
+        //         data: {
+        //             kode_kategori,
+        //             _token: '{{ csrf_token() }}'  // Token CSRF untuk keamanan
+        //         },
+        //         type: 'POST',
+        //         success: function(response) {
+        //              $("#kode_paket").html(response)
+        //          },
+        //         error: function(xhr, status, error) {
+        //              console.error('Error:', error);
+        //         }
+        //     });
+        // });
         
         
         $("#nomor_member").select2({

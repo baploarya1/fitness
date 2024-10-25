@@ -73,20 +73,27 @@ class LaporanController extends Controller
         $tgl_akhir = $request->input('tgl_akhir');
         $nama_member = $request->input('nama_member');
         $nomor_member = $request->input('nomor_member');
+        $kode_kategori = $request->input('kode_kategori');
+        $kode_paket = $request->input('kode_paket');
         // dd($nomor_member." ". $nama_member);
-
-        $query = Transaksi::with('member')->join('member', 'transaksi.nomor_member', '=', 'member.nomor_member')
-        ->with('paket')->with('kategori');
+        // dd($request->all());
+        $query = Transaksi::query()
+        ->where('transaksi.type', 'a')
         
+        ->join('member', 'transaksi.nomor_member', '=', 'member.nomor_member');       
+        // ->join('paket', 'transaksi.kode_paket', '=', 'paket.kode_paket');        
        
         if ($nomor_member) {
-            $query->where('nomor_member', $request->input('nomor_member'));
+            $query->where('transaksi.nomor_member', $request->input('nomor_member'));
+        }
+        if ($kode_paket) {
+            $query->where('transaksi.kode_paket', $request->input('kode_paket'));
+        }
+        if ($kode_kategori) {
+            $query->where('transaksi.kode_kategori', $request->input('kode_kategori'));
         }
         if ($nama_member) {
-            // $query->whereHas('member', function($query) use ($request) {
-            //     $query->where('nama_member', $request->input('nama_member'));
-            // });
-            $query->where('nama_member', (string)$request->input('nama_member'));
+            $query->where('member.nama_member', (string)$request->input('nama_member'));
         }
         if ($tgl_awal) {
             $query->whereDate('tanggal_transaksi', '>=', $tgl_awal);
@@ -96,7 +103,8 @@ class LaporanController extends Controller
             $query->whereDate('tanggal_transaksi', '<=',   $tgl_akhir);
         }
         
-        $transaksis = $query->where('transaksi.type', 'a')->get() ;
+        $transaksis = $query->with('member')->with('paket')->with('kategori')->where('transaksi.type', 'a') ->get() ;
+        // dd($transaksis);
         // dd($transaksis->toSql(), $transaksis->getBindings());
  
         $mpdf = new \Mpdf\Mpdf();
