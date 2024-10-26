@@ -34,7 +34,8 @@ $user = Auth::user();
     <!-- Custom styles for this template-->
     
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
-     
+    @yield('css') <!-- Placeholder for additional CSS -->
+
 </head>
 {{-- <script type="text/javascript" src="/js/jquery.min.js"></script> --}}
 

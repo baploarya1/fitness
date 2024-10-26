@@ -2,42 +2,7 @@
 @extends('layouts.main',['label'=>'Laporan Pembelian'])
   
 @section('content')
-
-@push('css')
-    <style>
-        .dataTables_info {
-            display: none;
-        }
-
-        #simpan {
-            text-decoration: none;
-        }
-
-        #simpan:hover {
-            opacity: 70%;
-            text-decoration: none;
-        }
-
-        .select2-container {
-            width: 100% !important;
-            padding: 0;
-        }
-
-        .select2-selection {
-
-            padding: 5px !important;
-            height: 40px !important;
-        }
-
-        label {
-            font-size: 13px;
-        }
-
-        input {
-            padding: 5px !important;
-        }
-    </style>
-@endpush
+  
  <div class="container">
 
 
@@ -46,7 +11,7 @@
     </div>
     <div class="card">
         <div class="card-body">
-             <form class='mt-2' enctype="multipart/form-data" id="myForm"  >
+             <form class='mt-2' enctype="multipart/form-data" id="myForm" data-index="create"  >
                 @csrf      
                 @component('components.select',['label'=>'Aksesoris',"type"=>"obj","name"=>"kode_aksesoris" ,'key1'=>'kode_aksesoris','key2'=>'nama_aksesoris','key3'=>'kode_aksesoris', 'key4'=>'satuan','col'=>'col-lg-8 col-sm-6',"placeholder"=>"Pilih Aksesoris", "options"=>$aksesoris]) <div class="col-lg-3">
                     <a href="{{ route('aksesoris.create') }}"class="btn  btn-login w-75 btn-success">Tambah Aksesoris</a>
@@ -80,7 +45,7 @@
                     <div class="row d-flex">
                         <div class="col-md-6 d-flex">
                             
-                            <button  class="btn btn-success w-50"  type="submit">Tambah Item</button>
+                            <button  class="btn btn-success w-50" id="tombol_simpan" type="submit">Tambah Item</button>
                         </div>
                     </div>
                                                          
@@ -250,10 +215,21 @@
         $(document).on("change", "#kode_supplier", function () {
           
           const arr = $(this).find('option:selected').text().split('|').map(s => s.trim());
-          console.log(arr);
+        //   console.log(arr);
           
           $('#nama_supplier').val(arr[1])           
-      });
+        });
+        $(document).on("click", ".editLink", function () {
+            const dataindex = $(this).data('index');
+            const {kode_supplier , harga,jumlah,sub_total, kode_aksesoris} =items[dataindex]
+            $('#kode_supplier').val(kode_supplier).trigger('change');  
+            $('#kode_aksesoris').val(kode_aksesoris).trigger('change');  
+            $('#harga').val(formatRupiah(harga)); 
+            $('#jumlah').val(jumlah); 
+            $('#sub_total').val(formatRupiah(sub_total)); //formatRupiah 
+            $('#myForm').attr('data-index', dataindex);
+
+        });
       
         $(document).ready(function() {
             // $('#kode_aksesoris').val('asdsa')
@@ -271,10 +247,20 @@
                 const jumlah = $('#jumlah').val();
                 const satuan = $('#satuan').val();
                 const sub_total = toNumber($('#sub_total').val()) ;
-                items.push({ kode_aksesoris ,nama_supplier,kode_supplier,nama_barang,harga,jumlah,sub_total,satuan });
+
+                const dataindex =  $(this).attr('data-index');
+                const obj = { kode_aksesoris ,nama_supplier,kode_supplier,nama_barang,harga,jumlah,sub_total,satuan }
+                if (dataindex =="create") {
+                    items.push(obj);
+                } else {
+                    items = items.map((val, idx) =>idx == dataindex ? obj : val);
+                    // items.map(val => val.id === 2 ? obj : val);
+                }
 
                 updateTable();
                 $('#kode_aksesoris').val('')
+                $('#myForm').attr('data-index', 'create');
+
                 this.reset(); // Mereset form dengan cara ini
             });
         });
@@ -302,19 +288,21 @@
                             <td>${item.nama_supplier}</td>
                             <td>${item.nama_barang}</td>
                             <td>${formatRupiah(item.harga)}</td>
-                            <td>${item.jumlah}</td>
+                            <td>${formatNumber(item.jumlah)}</td>
                             <td>${formatRupiah(item.sub_total)}</td>
                             <td class=" ">
                                     <a href="#"title="Hapus" class="deleteLink p-2 " data-index="${index}" ><i class="fa fa-trash text-danger"></i>
                                     </a>
+                                    <a  title="Edit" href="#" class="editLink   p-2 " data-index="${index}" ><i class="fas fa-pen text-primary"></i> 
+                                    </a>
                             </td>
                         </tr>`
                     );
-                });
+                }); //31,000
             }
         // this.reset();
-        $('#kode_aksesoris').val('').trigger('change'); // Change '2' to the desired value
-        $('#kode_supplier').val('').trigger('change'); // Change '2' to the desired value
+        $('#kode_aksesoris').val('').trigger('change');  
+        $('#kode_supplier').val('').trigger('change');  
 
             if (items.length == 0) {
                 // $('#btn-simpan').css('style', 'display: none;');
@@ -343,7 +331,9 @@
         function toNumber(rupiah) {
             return parseInt(rupiah.replace(/[^,\d]/g, ''), 10);
         }
-
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!))/g, ",");
+        }
        function geturlparam(){
 
            const url = window.location.href;
